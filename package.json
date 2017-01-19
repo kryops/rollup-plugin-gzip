@@ -1,0 +1,32 @@
+{
+  "name": "rollup-plugin-gzip",
+  "version": "1.0.0",
+  "description": "Compress your Rollup bundle with Gzip",
+  "keywords": [
+    "rollup",
+    "rollup-plugin",
+    "gzip",
+    "compress"
+  ],
+  "main": "./lib/index.cjs.js",
+  "jsnext:main": "./lib/index.es.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "ava test/**/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kryops/rollup-plugin-gzip.git"
+  },
+  "author": "Michael Strobel <michael@kryops.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kryops/rollup-plugin-gzip/issues"
+  },
+  "homepage": "https://github.com/kryops/rollup-plugin-gzip#readme",
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "rimraf": "^2.5.4",
+    "rollup": "^0.41.4"
+  }
+}

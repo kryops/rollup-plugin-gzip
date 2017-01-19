@@ -1,0 +1,11 @@
+*~
+.idea/
+.project
+.settings/
+Thumbs.db
+npm-debug.log
+*.tgz
+
+src/
+test/
+rollup.config.js

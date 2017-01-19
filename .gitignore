@@ -1,0 +1,13 @@
+node_modules/
+*~
+.idea/
+.project
+.settings/
+Thumbs.db
+npm-debug.log
+
+!.gitkeep
+
+lib/
+test/__output
+*.tgz
