@@ -1,0 +1,17 @@
+{
+  "name": "rollup-plugin-gzip-ts",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Compress your Rollup bundle with Gzip",
+  "main": "./index.ts",
+  "scripts": {
+    "test": "tsc"
+  },
+  "author": "Michael Strobel <michael@kryops.de>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^7.0.12",
+    "rollup-plugin-gzip": "*",
+    "typescript": "^2.2.2"
+  }
+}

@@ -10,6 +10,7 @@
   ],
   "main": "./lib/index.cjs.js",
   "jsnext:main": "./lib/index.es.js",
+  "typings": "./index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "test": "ava test/**/*.test.js",

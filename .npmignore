@@ -8,4 +8,5 @@ npm-debug.log
 
 src/
 test/
+typings-test/
 rollup.config.js
