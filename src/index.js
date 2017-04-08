@@ -1,5 +1,5 @@
-import zlib from 'zlib';
-import fs from 'fs';
+import * as zlib from 'zlib';
+import * as fs from 'fs';
 
 function gzipCompressFile(file, options, minSize) {
     return new Promise(resolve => {
