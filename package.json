@@ -12,7 +12,8 @@
   "jsnext:main": "./lib/index.es.js",
   "scripts": {
     "build": "rollup -c",
-    "test": "ava test/**/*.test.js"
+    "test": "ava test/**/*.test.js",
+    "prepublish": "npm run test && npm run build"
   },
   "repository": {
     "type": "git",
