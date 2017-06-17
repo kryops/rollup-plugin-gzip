@@ -115,3 +115,26 @@ test.serial('with options', t => {
         .then(() => compareFileWithGzip(t, 'test/__output/test1.txt'))
         .then(() => fileNotPresent(t, 'test/__output/test2.txt.gz'));
 });
+
+test.serial('with node-zopfli', t => {
+    return rollup
+        .rollup({
+            entry: 'test/sample/index.js',
+            plugins: [
+                gzip({
+                    algorithm: 'zopfli',
+                    options: {
+                        numiterations: 10
+                    }
+                })
+            ]
+        })
+        .then(bundle => {
+            return bundle.write({
+                dest: 'test/__output/bundle.js',
+                format: 'iife',
+                sourceMap: true
+            });
+        })
+        .then(() => compareFileWithGzip(t, 'test/__output/bundle.js'));
+});

@@ -1,7 +1,6 @@
-import * as zlib from 'zlib';
 import * as fs from 'fs';
 
-function gzipCompressFile(file, options, minSize) {
+function gzipCompressFile(file, algorithm, options, minSize) {
     return new Promise(resolve => {
         fs.stat(file, (err, stats) => {
             if(err) {
@@ -14,8 +13,12 @@ function gzipCompressFile(file, options, minSize) {
                 resolve();
             }
             else {
+                const compressor = (algorithm === 'zopfli')
+                    ? require('node-zopfli')
+                    : require('zlib');
+
                 fs.createReadStream(file)
-                    .pipe(zlib.createGzip(options))
+                    .pipe(compressor.createGzip(options))
                     .pipe(fs.createWriteStream(file + '.gz'))
                     .on('close', () => resolve());
             }
@@ -26,6 +29,7 @@ function gzipCompressFile(file, options, minSize) {
 export default function gzip(options) {
     options = options || {};
 
+    const algorithm = options.algorithm || 'zlib';
     const gzipOptions = options.options;
     const additionalFiles = options.additional || [];
     const minSize = options.minSize || 0;
@@ -40,7 +44,7 @@ export default function gzip(options) {
             const filesToCompress = [ buildOpts.dest ].concat(additionalFiles);
 
             return Promise.all(filesToCompress.map(
-                file => gzipCompressFile(file, gzipOptions, minSize)));
+                file => gzipCompressFile(file, algorithm, gzipOptions, minSize)));
         }
     };
 }

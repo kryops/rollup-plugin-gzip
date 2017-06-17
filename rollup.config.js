@@ -1,6 +1,6 @@
 export default {
     entry: 'src/index.js',
-    external: ['fs', 'zlib'],
+    external: ['fs', 'zlib', 'node-zopfli'],
 
     targets: [
         {
