@@ -21,3 +21,23 @@ plugin.onwrite(
 ).then(() => {
     console.log('complete')
 })
+
+gzip({
+    algorithm: 'zlib'
+})
+
+gzip({
+    algorithm: 'zopfli'
+})
+
+gzip({
+    algorithm: 'zopfli',
+    options: {
+        verbose: true,
+        verbose_more: true,
+        numiterations: 1,
+        blocksplitting: true,
+        blocksplittinglast: true,
+        blocksplittingmax: 1
+    }
+})

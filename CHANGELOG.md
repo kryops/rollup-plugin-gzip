@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext
+
+Update TypeScript typings
+
 ## v1.2.0 (2017-06-17)
 
 Added `algorithm: 'zopfli'`

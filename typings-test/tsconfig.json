@@ -2,7 +2,12 @@
   "compilerOptions": {
     "noEmit": true,
     "noImplicitAny": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "rollup-plugin-gzip": ["../index.d.ts"]
+    }
   },
   "files": [
     "index.ts"

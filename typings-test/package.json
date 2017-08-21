@@ -5,13 +5,13 @@
   "description": "Compress your Rollup bundle with Gzip",
   "main": "./index.ts",
   "scripts": {
+    "prepare": "npm run test",
     "test": "tsc"
   },
   "author": "Michael Strobel <michael@kryops.de>",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^7.0.12",
-    "rollup-plugin-gzip": "*",
-    "typescript": "^2.2.2"
+    "@types/node": "^8.0.24",
+    "typescript": "^2.4.2"
   }
 }
