@@ -54,16 +54,16 @@ test.afterEach(() => cleanup());
 test.serial('without options', t => {
     return rollup
         .rollup({
-            entry: 'test/sample/index.js',
+            input: 'test/sample/index.js',
             plugins: [
                 gzip()
             ]
         })
         .then(bundle => {
             return bundle.write({
-                dest: 'test/__output/bundle.js',
+                file: 'test/__output/bundle.js',
                 format: 'iife',
-                sourceMap: true
+                sourcemap: true
             });
         })
         .then(() => compareFileWithGzip(t, 'test/__output/bundle.js'));
@@ -73,7 +73,7 @@ test.serial('without options', t => {
 test.serial('with options', t => {
     return rollup
         .rollup({
-            entry: 'test/sample/index.js',
+            input: 'test/sample/index.js',
             plugins: [
                 // file that is above the size option => gets compressed
                 {
@@ -107,7 +107,7 @@ test.serial('with options', t => {
         })
         .then(bundle => {
             return bundle.write({
-                dest: 'test/__output/bundle.js',
+                file: 'test/__output/bundle.js',
                 format: 'cjs'
             });
         })
@@ -119,7 +119,7 @@ test.serial('with options', t => {
 test.serial('with node-zopfli', t => {
     return rollup
         .rollup({
-            entry: 'test/sample/index.js',
+            input: 'test/sample/index.js',
             plugins: [
                 gzip({
                     algorithm: 'zopfli',
@@ -131,9 +131,9 @@ test.serial('with node-zopfli', t => {
         })
         .then(bundle => {
             return bundle.write({
-                dest: 'test/__output/bundle.js',
+                file: 'test/__output/bundle.js',
                 format: 'iife',
-                sourceMap: true
+                sourcemap: true
             });
         })
         .then(() => compareFileWithGzip(t, 'test/__output/bundle.js'));

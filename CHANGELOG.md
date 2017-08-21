@@ -2,7 +2,9 @@
 
 ## vNext
 
-Update TypeScript typings
+* Compatibility with rollup 0.48
+* Update TypeScript typings
+
 
 ## v1.2.0 (2017-06-17)
 

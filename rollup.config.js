@@ -1,15 +1,15 @@
 export default {
-    entry: 'src/index.js',
+    input: 'src/index.js',
     external: ['fs', 'zlib', 'node-zopfli'],
 
-    targets: [
+    output: [
         {
             format: 'cjs',
-            dest: 'lib/index.cjs.js'
+            file: 'lib/index.cjs.js'
         },
         {
             format: 'es',
-            dest: 'lib/index.es.js'
+            file: 'lib/index.es.js'
         }
     ]
 }
