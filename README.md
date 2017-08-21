@@ -17,7 +17,7 @@ import {rollup} from "rollup";
 import gzip from "rollup-plugin-gzip";
 
 rollup({
-    entry: 'src/index.js',
+    input: 'src/index.js',
     plugins: [
         gzip()
     ]
