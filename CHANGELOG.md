@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext
+## v1.3.0 (2017-08-21)
 
 * Compatibility with rollup 0.48
 * Update TypeScript typings
