@@ -116,7 +116,8 @@ test.serial('with options', t => {
         .then(() => fileNotPresent(t, 'test/__output/test2.txt.gz'));
 });
 
-test.serial('with node-zopfli', t => {
+
+test.serial.skip('with node-zopfli', t => {
     return rollup
         .rollup({
             input: 'test/sample/index.js',
