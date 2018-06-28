@@ -40,7 +40,7 @@ export default function gzip(options) {
         onwrite: function(buildOpts, bundle) {
 
             // fallback to .dest for rollup < 0.48
-            const outBundle = buildOpts.file || buildOpts.dest
+            const outBundle = buildOpts.file || buildOpts.dest;
 
             // we have to read from the actual written bundle file rather than use bundle.code
             // as it does not contain the source map comment
