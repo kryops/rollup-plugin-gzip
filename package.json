@@ -31,8 +31,5 @@
     "ava": "^0.25.0",
     "rimraf": "^2.6.2",
     "rollup": "^0.62.0"
-  },
-  "optionalDependencies": {
-    "node-zopfli": "^2.0.2"
   }
 }
