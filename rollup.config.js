@@ -1,6 +1,6 @@
 export default {
     input: 'src/index.js',
-    external: ['fs', 'zlib', 'node-zopfli', 'rollup'],
+    external: ['fs', 'path', 'zlib', 'node-zopfli', 'rollup'],
 
     output: [
         {

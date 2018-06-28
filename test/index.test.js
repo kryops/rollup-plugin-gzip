@@ -202,3 +202,24 @@ test.serial('delayed writing in plugin without promise', t => {
         .then(() => compareFileWithGzip(t, 'test/__output/bundle.js'))
         .then(() => compareFileWithGzip(t, 'test/__output/test3.txt'));
 });
+
+test.serial('splitting', t => {
+    return rollup
+        .rollup({
+            input: ['test/sample-splitting/a.js', 'test/sample-splitting/b.js'],
+            experimentalCodeSplitting: true,
+            plugins: [
+                gzip()
+            ]
+        })
+        .then(bundle => {
+            return bundle.write({
+                dir: 'test/__output',
+                format: 'cjs'
+            });
+        })
+        .then(() => new Promise(resolve => setTimeout(() => resolve(), 1500)))
+        .then(() => compareFileWithGzip(t, 'test/__output/a.js'))
+        .then(() => compareFileWithGzip(t, 'test/__output/b.js'))
+        .then(() => compareFileWithGzip(t, 'test/__output/c.js'));
+});

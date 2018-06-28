@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as path from 'path';
 import { VERSION } from 'rollup';
 
 function gzipCompressFile(file, algorithm, options, minSize) {
@@ -44,6 +45,13 @@ export default function gzip(options) {
         console.warn('To change, set a "delay" value for this plugin.');
     }
 
+    const doCompress = (filesToCompress) => new Promise(resolve => {
+        setTimeout(() => {
+            resolve(Promise.all(filesToCompress.map(
+                file => gzipCompressFile(file, algorithm, gzipOptions, minSize))));
+        }, delay);
+    });
+
     return {
         name: 'gzip',
 
@@ -52,16 +60,41 @@ export default function gzip(options) {
             // fallback to .dest for rollup < 0.48
             const outBundle = buildOpts.file || buildOpts.dest;
 
+            const bundleFiles = outBundle ? [ outBundle ] : [];
+
             // we have to read from the actual written bundle file rather than use bundle.code
             // as it does not contain the source map comment
-            const filesToCompress = [ outBundle ].concat(additionalFiles);
+            const filesToCompress = bundleFiles.concat(additionalFiles);
 
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    resolve(Promise.all(filesToCompress.map(
-                        file => gzipCompressFile(file, algorithm, gzipOptions, minSize))));
-                }, delay);
+            if (!filesToCompress.length) return;
+
+            return doCompress(filesToCompress);
+        },
+
+        // experimental support for code splitting
+        generateBundle: function(outputOptions, bundle, isWrite) {
+            if (!isWrite) return;
+            if (!outputOptions.dir || outputOptions.file) return;
+
+            // we set a delay because we don't know when the files will be written :-/
+            if (options.delay === undefined && delay < 1000) {
+                delay = 1000;
+            }
+
+            const bundleFiles = [];
+
+            Object.keys(bundle).forEach(id => {
+                bundleFiles.push(path.join(outputOptions.dir, id));
             });
+
+            const filesToCompress = bundleFiles.concat(additionalFiles);
+
+            if (!filesToCompress.length) return;
+
+            doCompress(filesToCompress);
+
+            // we have to resolve immediately, because otherwise the files will not be written no matter what delay we have set
+            return Promise.resolve();
         }
     };
 }

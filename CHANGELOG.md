@@ -2,6 +2,7 @@
 
 ## v1.4.0 (UNRELEASED)
 
+* Add experimental support for compressing chunks when using code splitting
 * Add `delay` option for additional files that are written outside the plugin lifecycle
 * Assume a default delay of 5000ms in rollup 0.60.0-0.62.0 as a workaround for changed behavior (fixes #2)
 * Remove dependency to `node-zopfli` to prevent installing it by default which is failing at the moment (fixes #3)
