@@ -10,3 +10,4 @@ src/
 test/
 typings-test/
 rollup.config.js
+yarn.lock
