@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.4.0 (UNRELEASED)
+## v1.4.0 (2018-06-29)
 
 * Add experimental support for compressing chunks when using code splitting
 * Add `delay` option for additional files that are written outside the plugin lifecycle
