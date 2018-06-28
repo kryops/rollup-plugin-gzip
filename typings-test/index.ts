@@ -8,7 +8,8 @@ const plugin = gzip({
         'test/__output/test1.txt',
         'test/__output/test2.txt'
     ],
-    minSize: 1000
+    minSize: 1000,
+    delay: 5000
 })
 
 const name = plugin.name
