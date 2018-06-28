@@ -6,8 +6,11 @@ declare namespace RollupPluginGzip {
         /** Compress additional files */
         additional?: string[]
     
-        /** Minimum size for compression */
+        /** Minimum size for compression [bytes] */
         minSize?: number
+
+        /** Delay starting the compression for additional assets that are written late [ms] */
+        delay?: number
     }
     
     export interface OptionsZlib extends OptionsBase {

@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { VERSION } from 'rollup';
 
 function gzipCompressFile(file, algorithm, options, minSize) {
     return new Promise(resolve => {
@@ -34,6 +35,15 @@ export default function gzip(options) {
     const additionalFiles = options.additional || [];
     const minSize = options.minSize || 0;
 
+    let delay = options.delay || 0;
+
+    if ( options.delay === undefined && options.additional && VERSION >= '0.60.0' /* && VERSION <= '0.62.0' */) {
+        delay = 5000;
+        console.warn('[rollup-plugin-gzip] This version of rollup does not guarantee that plugins are executed in the right order!');
+        console.warn('As you have specified additional resources to be compressed, we assume a default delay of 5000ms.');
+        console.warn('To change, set a "delay" value for this plugin.');
+    }
+
     return {
         name: 'gzip',
 
@@ -46,8 +56,12 @@ export default function gzip(options) {
             // as it does not contain the source map comment
             const filesToCompress = [ outBundle ].concat(additionalFiles);
 
-            return Promise.all(filesToCompress.map(
-                file => gzipCompressFile(file, algorithm, gzipOptions, minSize)));
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(Promise.all(filesToCompress.map(
+                        file => gzipCompressFile(file, algorithm, gzipOptions, minSize))));
+                }, delay);
+            });
         }
     };
 }

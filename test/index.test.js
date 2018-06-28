@@ -139,3 +139,66 @@ test.serial.skip('with node-zopfli', t => {
         })
         .then(() => compareFileWithGzip(t, 'test/__output/bundle.js'));
 });
+
+test.serial('delayed writing in plugin', t => {
+    return rollup
+        .rollup({
+            input: 'test/sample/index.js',
+            plugins: [
+                {
+                    name: 'test',
+                    onwrite: (options, bundle) => {
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                fs.writeFile('test/__output/test3.txt', 'This is a test', () => resolve());
+                            }, 1000);
+                        });
+                    }
+                },
+                gzip({
+                    additional: [
+                        'test/__output/test3.txt',
+                    ]
+                })
+            ]
+        })
+        .then(bundle => {
+            return bundle.write({
+                file: 'test/__output/bundle.js',
+                format: 'cjs'
+            });
+        })
+        .then(() => compareFileWithGzip(t, 'test/__output/bundle.js'))
+        .then(() => compareFileWithGzip(t, 'test/__output/test3.txt'));
+});
+
+test.serial('delayed writing in plugin without promise', t => {
+    return rollup
+        .rollup({
+            input: 'test/sample/index.js',
+            plugins: [
+                {
+                    name: 'test',
+                    onwrite: (options, bundle) => {
+                        setTimeout(() => {
+                            fs.writeFile('test/__output/test3.txt', 'This is a test', () => {});
+                        }, 1000);
+                    }
+                },
+                gzip({
+                    additional: [
+                        'test/__output/test3.txt',
+                    ],
+                    delay: 2000
+                })
+            ]
+        })
+        .then(bundle => {
+            return bundle.write({
+                file: 'test/__output/bundle.js',
+                format: 'cjs'
+            });
+        })
+        .then(() => compareFileWithGzip(t, 'test/__output/bundle.js'))
+        .then(() => compareFileWithGzip(t, 'test/__output/test3.txt'));
+});

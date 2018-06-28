@@ -27,10 +27,10 @@
   },
   "homepage": "https://github.com/kryops/rollup-plugin-gzip#readme",
   "devDependencies": {
-    "@types/node": "^10.0.4",
+    "@types/node": "^10.5.0",
     "ava": "^0.25.0",
     "rimraf": "^2.6.2",
-    "rollup": "^0.58.2"
+    "rollup": "^0.62.0"
   },
   "optionalDependencies": {
     "node-zopfli": "^2.0.2"
