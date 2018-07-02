@@ -1,0 +1,9 @@
+{
+    "extends": ["tslint:latest", "tslint-config-prettier"],
+    "rules": {
+        "no-implicit-dependencies": false,
+        "interface-name": false,
+        "no-console": false,
+        "curly": false
+    }
+}

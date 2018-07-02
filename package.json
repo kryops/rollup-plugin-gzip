@@ -8,13 +8,18 @@
     "gzip",
     "compress"
   ],
-  "main": "./lib/index.cjs.js",
-  "jsnext:main": "./lib/index.es.js",
-  "typings": "./index.d.ts",
+  "main": "./dist/index.js",
+  "jsnext:main": "./dist-es/index.js",
+  "module": "./dist-es/index.js",
+  "es2015": "./dist-es/index.js",
+  "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c",
+    "build": "tsc && tsc --project tsconfig-es.json",
+    "clean": "rimraf dist dist-es",
+    "format": "prettier --config .prettierrc ./{src,test}/**",
+    "lint": "tslint --project .",
     "test": "ava test/**/*.test.js",
-    "prepublish": "npm run build && npm run test"
+    "prepare": "npm run clean && npm run build && npm run format && npm run lint && npm run test"
   },
   "repository": {
     "type": "git",
@@ -27,9 +32,13 @@
   },
   "homepage": "https://github.com/kryops/rollup-plugin-gzip#readme",
   "devDependencies": {
-    "@types/node": "^10.5.0",
+    "@types/node": "^10.5.1",
     "ava": "^0.25.0",
+    "prettier": "^1.13.7",
     "rimraf": "^2.6.2",
-    "rollup": "^0.62.0"
+    "rollup": "^0.62.0",
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.13.0",
+    "typescript": "^2.9.2"
   }
 }

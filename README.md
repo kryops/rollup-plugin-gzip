@@ -2,25 +2,21 @@
 
 Creates a compressed `.gz` artifact for your Rollup bundle.
 
-
 ## Installation
 
 ```
 npm install --save-dev rollup-plugin-gzip
 ```
 
-
 ## Usage
 
 ```js
-import {rollup} from "rollup";
-import gzip from "rollup-plugin-gzip";
+import { rollup } from 'rollup'
+import gzip from 'rollup-plugin-gzip'
 
 rollup({
     input: 'src/index.js',
-    plugins: [
-        gzip()
-    ]
+    plugins: [gzip()],
 }).then(/* ... */)
 ```
 
@@ -31,14 +27,12 @@ Compression with Node's internal `zlib` compressor:
 ```js
 gzip({
     options: {
-        level: 9
+        level: 9,
         // ...
     },
-    additional: [
-        'dist/bundle.css'
-    ],
+    additional: ['dist/bundle.css'],
     minSize: 1000,
-    delay: 5000
+    delay: 5000,
 })
 ```
 
@@ -48,9 +42,9 @@ Compression with `node-zopfli`:
 gzip({
     algorithm: 'zopfli',
     options: {
-        numiterations: 10
+        numiterations: 10,
         // ...
-    }
+    },
     // ...
 })
 ```
@@ -63,10 +57,10 @@ If you set `algorithm: 'zopfli'`, you will have to install the `node-zopfli` mod
 npm install --save-dev node-zopfli
 ```
 
-**options**: 
+**options**:
 
-* with `algorithm: 'zlib'` (default): [zlib options](https://nodejs.org/api/zlib.html#zlib_class_options)
-* with `algorithm: 'zopfli'`: [node-zopfli options](https://www.npmjs.com/package/node-zopfli#options)
+-   with `algorithm: 'zlib'` (default): [zlib options](https://nodejs.org/api/zlib.html#zlib_class_options)
+-   with `algorithm: 'zopfli'`: [node-zopfli options](https://www.npmjs.com/package/node-zopfli#options)
 
 **additional**: Compress additional files
 

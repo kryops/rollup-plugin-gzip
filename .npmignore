@@ -1,5 +1,6 @@
 *~
 .idea/
+.vscode/
 .project
 .settings/
 Thumbs.db
@@ -8,6 +9,11 @@ npm-debug.log
 
 src/
 test/
-typings-test/
 rollup.config.js
 yarn.lock
+.prettierrc
+.prettierignore
+tsconfig.json
+tsconfig-es.json
+tslint.json
+dist-es/index.d.ts

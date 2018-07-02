@@ -1,8 +1,8 @@
 function a() {
-    console.log('a');
+    console.log('a')
     import('./c').then(function(c) {
-        c();
+        c()
     })
 }
 
-a();
+a()

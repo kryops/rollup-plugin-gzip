@@ -1,3 +1,3 @@
-import {foobar} from "./foobar";
+import { foobar } from './foobar'
 
-foobar();
+foobar()
