@@ -7,8 +7,8 @@
         "sourceMap": false,
         "outDir": "./dist",
         "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
 

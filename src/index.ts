@@ -1,130 +1,93 @@
-import * as fs from 'fs'
-import * as path from 'path'
-import { Plugin, VERSION } from 'rollup'
-import { ZlibOptions } from 'zlib'
+import { basename } from 'path'
+import { OutputChunk, OutputFile, OutputOptions, Plugin } from 'rollup'
+import { gzip, ZlibOptions } from 'zlib'
 
 export interface GzipPluginOptions {
-    algorithm?: string
     options?: ZlibOptions
     additional?: string[]
     minSize?: number
     delay?: number
+
+    // TODO add filter regex property so we can exclude chunks/assets
+    // TODO add custom compressing algorithm
+    // TODO add custom name convention
 }
 
-function gzipCompressFile(
-    file: string,
-    algorithm: string,
-    options: ZlibOptions | undefined,
-    minSize: number,
-): Promise<void> {
-    return new Promise(resolve => {
-        fs.stat(file, (err, stats) => {
-            if (err) {
-                console.error('rollup-plugin-gzip: Error reading file ' + file)
-                resolve()
-                return
-            }
+// functionality partially copied from rollup
 
-            if (minSize && minSize > stats.size) {
-                resolve()
-            } else {
-                const compressor: typeof import('zlib') =
-                    algorithm === 'zopfli'
-                        ? require('node-zopfli')
-                        : require('zlib')
-
-                fs.createReadStream(file)
-                    .pipe(compressor.createGzip(options))
-                    .pipe(fs.createWriteStream(file + '.gz'))
-                    .on('close', () => resolve())
-            }
-        })
-    })
+/**
+ * copied from https://github.com/rollup/rollup/blob/master/src/rollup/index.ts#L450
+ */
+function isOutputChunk(file: OutputFile): file is OutputChunk {
+    return typeof (file as OutputChunk).code === 'string'
 }
+
+/**
+ * Gets the string/buffer content from a file object.
+ * Important for adding source map comments
+ *
+ * Copied partially from rollup.writeOutputFile
+ * https://github.com/rollup/rollup/blob/master/src/rollup/index.ts#L454
+ */
+function getOutputFileContent(
+    outputFileName: string,
+    outputFile: OutputFile,
+    outputOptions: OutputOptions,
+): string | Buffer {
+    if (isOutputChunk(outputFile)) {
+        let source: string | Buffer
+        source = outputFile.code
+        if (outputOptions.sourcemap && outputFile.map) {
+            const url =
+                outputOptions.sourcemap === 'inline'
+                    ? outputFile.map.toUrl()
+                    : `${basename(outputFileName)}.map`
+
+            // https://github.com/rollup/rollup/blob/master/src/utils/sourceMappingURL.ts#L1
+            source += `//# source` + `MappingURL=${url}\n`
+        }
+        return source
+    } else {
+        return outputFile
+    }
+}
+
+// actual plugin code
 
 function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
-    const algorithm = options.algorithm || 'zlib'
-    const gzipOptions = options.options
-    const additionalFiles = options.additional || []
-    const minSize = options.minSize || 0
-
-    let delay = options.delay || 0
-
-    if (
-        options.delay === undefined &&
-        options.additional &&
-        VERSION >= '0.60.0' /* && VERSION <= '0.62.0' */
-    ) {
-        delay = 5000
-        console.warn(
-            '[rollup-plugin-gzip] This version of rollup does not guarantee that plugins are executed in the right order!',
-        )
-        console.warn(
-            'As you have specified additional resources to be compressed, we assume a default delay of 5000ms.',
-        )
-        console.warn('To change, set a "delay" value for this plugin.')
-    }
-
-    const doCompress = (filesToCompress: string[]): Promise<any> =>
-        new Promise(resolve => {
-            setTimeout(() => {
-                resolve(
-                    Promise.all(
-                        filesToCompress.map(file =>
-                            gzipCompressFile(
-                                file,
-                                algorithm,
-                                gzipOptions,
-                                minSize,
-                            ),
-                        ),
-                    ),
-                )
-            }, delay)
-        })
+    // TODO implement plugin options
 
     const plugin: Plugin = {
         name: 'gzip',
 
-        onwrite(buildOpts) {
-            // fallback to .dest for rollup < 0.48
-            const outBundle = buildOpts.file || buildOpts.dest
-
-            const bundleFiles = outBundle ? [outBundle] : []
-
-            // we have to read from the actual written bundle file rather than use bundle.code
-            // as it does not contain the source map comment
-            const filesToCompress = bundleFiles.concat(additionalFiles)
-
-            if (!filesToCompress.length) return
-
-            return doCompress(filesToCompress)
-        },
-
-        // experimental support for code splitting
         generateBundle(outputOptions, bundle, isWrite) {
             if (!isWrite) return
-            if (!outputOptions.dir || outputOptions.file) return
 
-            // we set a delay because we don't know when the files will be written :-/
-            if (options.delay === undefined && delay < 1000) {
-                delay = 1000
-            }
+            return Promise.all(
+                Object.keys(bundle).map(fileName => {
+                    const fileEntry = bundle[fileName] as any
 
-            const bundleFiles: string[] = []
+                    const fileContent = getOutputFileContent(
+                        fileName,
+                        fileEntry,
+                        outputOptions,
+                    )
 
-            Object.keys(bundle).forEach(id => {
-                bundleFiles.push(path.join(outputOptions.dir!, id))
-            })
-
-            const filesToCompress = bundleFiles.concat(additionalFiles)
-
-            if (!filesToCompress.length) return
-
-            doCompress(filesToCompress)
-
-            // we have to resolve immediately, because otherwise the files will not be written no matter what delay we have set
-            return Promise.resolve()
+                    return new Promise((resolve, reject) => {
+                        gzip(fileContent, (err, result) => {
+                            if (err) {
+                                reject(
+                                    '[rollup-plugin-gzip] Error compressing file ' +
+                                        fileName,
+                                )
+                            } else {
+                                bundle[fileName + '.gz'] = result
+                                resolve()
+                            }
+                        })
+                    })
+                }),
+            ) as Promise<any>
         },
     }
 

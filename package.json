@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsc && tsc --project tsconfig-es.json",
     "clean": "rimraf dist dist-es",
-    "format": "prettier --config .prettierrc ./{src,test}/**",
+    "format": "prettier --config .prettierrc ./src/**",
     "lint": "tslint --project .",
     "test": "ava test/**/*.test.js",
     "prepare": "npm run clean && npm run build && npm run format && npm run lint && npm run test"

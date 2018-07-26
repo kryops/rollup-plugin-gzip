@@ -5,6 +5,7 @@ node_modules/
 .settings/
 Thumbs.db
 npm-debug.log
+yarn-error.log
 
 !.gitkeep
 
