@@ -2,6 +2,22 @@
 
 ## v2.0.0 (UNRELEASED)
 
+**BREAKING CHANGES**
+
+-   Drop support for rollup version < 0.60.0
+-   Drop `algorithm` option. Use `customCompression` instead
+-   Rename `options` option to `gzipOptions`
+-   Rename `additional` option to `additionalFiles`
+-   Rename `delay` option to `additionalFilesDelay`
+
+New Features
+
+-   Add `filter` option to control which chunks should be compressed
+-   Add `customCompression` option for providing a custom compression algorithm
+-   Add `fileName` option for controlling the compressed file names (defaults to `.gz`)
+
+Internal Changes
+
 -   Convert code base to TypeScript
 -   Add linting and auto-formatting
 
