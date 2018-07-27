@@ -104,7 +104,6 @@ test.serial('without options', t => {
 test.serial('with fileName string option', t => {
     return sampleRollup({
         fileName: '.gzzz',
-        algorithm: 'zopfli',
     }).then(() => compareFileWithGzip(t, 'test/__output/bundle.js', '.gzzz'))
 })
 
@@ -162,7 +161,7 @@ test.serial('with additionalFiles option', t => {
                     'test/__output/test1.txt',
                     'test/__output/test2.txt',
                 ],
-                additionalFilesDelay: 2000,
+                additionalFilesDelay: 2500,
             }),
         )
         .then(() => compareFileWithGzip(t, 'test/__output/bundle.js'))
