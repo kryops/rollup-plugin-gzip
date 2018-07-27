@@ -42,6 +42,6 @@
     "typescript": "^2.9.2"
   },
   "peerDependencies": {
-    "rollup": ">0.60.0"
+    "rollup": ">=0.60.0"
   }
 }
