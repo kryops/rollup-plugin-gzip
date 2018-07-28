@@ -2,6 +2,8 @@
 
 Creates a compressed `.gz` artifact for your Rollup bundle.
 
+**COMPATIBILITY NOTE**: Version 2.x is compatible with rollup 0.60 and above! For older versions of rollup, use version 1.x of this plugin.
+
 ## Installation
 
 ```
@@ -24,7 +26,7 @@ rollup({
 
 **filter** `RegExp | (fileName: string) => boolean`
 
-Control which of the output files to compress
+Control which of the output files to compress.
 
 Defaults to `/\.(js|json|css)$/`
 
@@ -54,7 +56,7 @@ Set a custom compression algorithm. The function can either return the compresse
 
 Set a custom file name convention for the compressed files. Can be a suffix string or a function returning the file name.
 
-Defaults to `.gz`
+Defaults to `".gz"`
 
 ## Examples
 
