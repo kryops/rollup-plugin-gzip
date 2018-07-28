@@ -1,6 +1,6 @@
 # Changelog
 
-## v2.0.0 (UNRELEASED)
+## v2.0.0 (2018-07-28)
 
 **BREAKING CHANGES**
 
