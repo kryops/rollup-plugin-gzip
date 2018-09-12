@@ -165,7 +165,7 @@ test.serial('with additionalFiles option', t => {
             }),
         )
         .then(() => compareFileWithGzip(t, 'test/__output/bundle.js'))
-        .then(() => delay())
+        .then(() => delay(3500))
         .then(() => compareFileWithGzip(t, 'test/__output/test1.txt'))
         .then(() => compareFileWithGzip(t, 'test/__output/test2.txt'))
 })
