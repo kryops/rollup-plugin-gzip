@@ -14,11 +14,11 @@ npm install --save-dev rollup-plugin-gzip
 
 ```js
 import { rollup } from 'rollup'
-import gzip from 'rollup-plugin-gzip'
+import gzipPlugin from 'rollup-plugin-gzip'
 
 rollup({
     input: 'src/index.js',
-    plugins: [gzip()],
+    plugins: [gzipPlugin()],
 }).then(/* ... */)
 ```
 
@@ -65,14 +65,31 @@ Defaults to `".gz"`
 ```ts
 import { compress } from 'brotli'
 import { rollup } from 'rollup'
-import gzip from 'rollup-plugin-gzip'
+import gzipPlugin from 'rollup-plugin-gzip'
 
 rollup({
     input: 'src/index.js',
     plugins: [
-        gzip({
-            customCompression: content => compress(content),
+        gzipPlugin({
+            customCompression: content => compress(Buffer.from(content)),
             fileName: '.br',
+        }),
+    ],
+}).then(/* ... */)
+```
+
+### Zopfli Compression
+
+```ts
+import { gzip } from 'node-zopfli'
+import { rollup } from 'rollup'
+import gzipPlugin from 'rollup-plugin-gzip'
+
+rollup({
+    input: 'src/index.js',
+    plugins: [
+        gzipPlugin({
+            customCompression: content => gzip(Buffer.from(content)),
         }),
     ],
 }).then(/* ... */)
