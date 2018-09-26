@@ -32,11 +32,11 @@
   },
   "homepage": "https://github.com/kryops/rollup-plugin-gzip#readme",
   "devDependencies": {
-    "@types/node": "^10.9.4",
+    "@types/node": "^10.11.0",
     "ava": "^0.25.0",
-    "prettier": "^1.14.2",
+    "prettier": "^1.14.3",
     "rimraf": "^2.6.2",
-    "rollup": "^0.65.2",
+    "rollup": "^0.66.2",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
     "typescript": "^3.0.3"
