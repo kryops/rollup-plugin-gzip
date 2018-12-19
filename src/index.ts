@@ -188,7 +188,7 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
 
                     // file name filter option check
 
-                    const fileNameFilter = options.filter || /\.(js|json|css)$/
+                    const fileNameFilter = options.filter || /\.(js|mjs|json|css)$/
 
                     if (
                         isRegExp(fileNameFilter) &&
