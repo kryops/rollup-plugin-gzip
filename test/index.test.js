@@ -28,14 +28,14 @@ function compareFileWithGzip(t, path, extension) {
     return new Promise((resolve, reject) => {
         fs.readFile(path, (err, bundleContent) => {
             if (err) {
-                t.fail('Bundle not found!')
+                t.fail('Bundle not found! ' + path)
                 reject()
                 return
             }
 
             fs.readFile(path + (extension || '.gz'), (err, gzipContent) => {
                 if (err) {
-                    t.fail('Gzip file not found!')
+                    t.fail('Gzip file not found! ' + path)
                     reject()
                     return
                 }
@@ -172,11 +172,11 @@ test.serial('with additionalFiles option', t => {
 
 test.serial('splitting with regex filter option', t => {
     return sampleSplittingRollup({
-        filter: /(b|c).js$/,
+        filter: /(b|chunk-.+).js$/,
     })
         .then(() => fileNotPresent(t, 'test/__output/a.js.gz'))
         .then(() => compareFileWithGzip(t, 'test/__output/b.js'))
-        .then(() => compareFileWithGzip(t, 'test/__output/c.js'))
+        .then(() => compareFileWithGzip(t, 'test/__output/chunk-66fda47d.js'))
 })
 
 test.serial('splitting with function filter option', t => {
@@ -185,7 +185,7 @@ test.serial('splitting with function filter option', t => {
     })
         .then(() => fileNotPresent(t, 'test/__output/a.js.gz'))
         .then(() => compareFileWithGzip(t, 'test/__output/b.js'))
-        .then(() => compareFileWithGzip(t, 'test/__output/c.js'))
+        .then(() => compareFileWithGzip(t, 'test/__output/chunk-66fda47d.js'))
 })
 
 test.serial('splitting with minSize option', t => {
