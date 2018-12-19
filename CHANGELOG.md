@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.0 (2018-12-19)
+
+-   Add support for `.mjs` bundles (@ashuanindian in #5)
+
 ## v2.0.0 (2018-07-28)
 
 **BREAKING CHANGES**
