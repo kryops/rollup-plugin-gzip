@@ -81,18 +81,23 @@ const sampleRollup = options =>
             })
         })
 
-const sampleSplittingRollup = options =>
-    rollup
-        .rollup({
-            input: ['test/sample-splitting/a.js', 'test/sample-splitting/b.js'],
-            plugins: [gzip(options)],
+const sampleSplittingRollup = options => {
+    const inputOptions = {
+        input: ['test/sample-splitting/a.js', 'test/sample-splitting/b.js'],
+        plugins: [gzip(options)],
+    }
+
+    if (rollup.VERSION < '1.0.0') {
+        inputOptions.experimentalCodeSplitting = true
+    }
+
+    return rollup.rollup(inputOptions).then(bundle => {
+        return bundle.write({
+            dir: 'test/__output',
+            format: 'cjs',
         })
-        .then(bundle => {
-            return bundle.write({
-                dir: 'test/__output',
-                format: 'cjs',
-            })
-        })
+    })
+}
 
 test.serial('without options', t => {
     return sampleRollup().then(() =>

@@ -2,13 +2,7 @@
 
 Creates a compressed `.gz` artifact for your Rollup bundle.
 
-## Compatibility Notes
-
-For specific versions of rollup, use the following versions of this plugin:
-
--   Rollup >= 1.0.0: Version 3.x
--   Rollup >= 0.60 and <= 1.0.0: Version 2.x
--   Rollup < 0.60: Version 1.x
+**COMPATIBILITY NOTE**: Version 2.x is compatible with rollup 0.60 and above! For older versions of rollup, use version 1.x of this plugin.
 
 ## Installation
 

@@ -1,10 +1,8 @@
 # Changelog
 
-## v3.0.0 (UNRELEASED)
+## v2.2.0 (2018-12-29)
 
-**BREAKING CHANGES**
-
--   Drop support for rollup version < 1.0.0
+-   Add support for rollup 1.0.0
 
 ## v2.1.0 (2018-12-19)
 

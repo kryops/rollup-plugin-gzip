@@ -103,6 +103,9 @@ function getOutputFileContent(
         }
         return source
     } else {
+        if (VERSION < '1.0.0') {
+            return outputFile as any
+        }
         return outputFile.source
     }
 }
@@ -228,10 +231,16 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
                     return Promise.resolve(doCompress(fileContent))
                         .then(compressedContent => {
                             const compressedFileName = mapFileName(fileName)
-                            bundle[compressedFileName] = {
-                                fileName: compressedFileName,
-                                isAsset: true,
-                                source: compressedContent,
+                            if (VERSION < '1.0.0') {
+                                bundle[
+                                    compressedFileName
+                                ] = compressedContent as any
+                            } else {
+                                bundle[compressedFileName] = {
+                                    fileName: compressedFileName,
+                                    isAsset: true,
+                                    source: compressedContent,
+                                }
                             }
                         })
                         .catch((err: any) => {
