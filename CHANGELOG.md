@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.0 (UNRELEASED)
+
+**BREAKING CHANGES**
+
+-   Drop support for rollup version < 1.0.0
+
 ## v2.1.0 (2018-12-19)
 
 -   Add support for `.mjs` bundles ([@ashuanindian](https://github.com/ashuanindian) in [#5](https://github.com/kryops/rollup-plugin-gzip/pull/5))

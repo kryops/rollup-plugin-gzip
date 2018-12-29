@@ -1,6 +1,12 @@
 import { readFile, writeFile } from 'fs'
 import { basename } from 'path'
-import { OutputChunk, OutputFile, OutputOptions, Plugin, VERSION } from 'rollup'
+import {
+    OutputAsset,
+    OutputChunk,
+    OutputOptions,
+    Plugin,
+    VERSION,
+} from 'rollup'
 import { isFunction, isRegExp, promisify } from 'util'
 import { gzip, ZlibOptions } from 'zlib'
 
@@ -67,7 +73,7 @@ const writeFilePromise = promisify(writeFile)
 /**
  * copied from https://github.com/rollup/rollup/blob/master/src/rollup/index.ts#L450
  */
-function isOutputChunk(file: OutputFile): file is OutputChunk {
+function isOutputChunk(file: OutputAsset | OutputChunk): file is OutputChunk {
     return typeof (file as OutputChunk).code === 'string'
 }
 
@@ -80,7 +86,7 @@ function isOutputChunk(file: OutputFile): file is OutputChunk {
  */
 function getOutputFileContent(
     outputFileName: string,
-    outputFile: OutputFile,
+    outputFile: OutputAsset | OutputChunk,
     outputOptions: OutputOptions,
 ): string | Buffer {
     if (isOutputChunk(outputFile)) {
@@ -97,7 +103,7 @@ function getOutputFileContent(
         }
         return source
     } else {
-        return outputFile
+        return outputFile.source
     }
 }
 
@@ -188,7 +194,8 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
 
                     // file name filter option check
 
-                    const fileNameFilter = options.filter || /\.(js|mjs|json|css)$/
+                    const fileNameFilter =
+                        options.filter || /\.(js|mjs|json|css)$/
 
                     if (
                         isRegExp(fileNameFilter) &&
@@ -220,7 +227,12 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
 
                     return Promise.resolve(doCompress(fileContent))
                         .then(compressedContent => {
-                            bundle[mapFileName(fileName)] = compressedContent
+                            const compressedFileName = mapFileName(fileName)
+                            bundle[compressedFileName] = {
+                                fileName: compressedFileName,
+                                isAsset: true,
+                                source: compressedContent,
+                            }
                         })
                         .catch((err: any) => {
                             console.error(err)

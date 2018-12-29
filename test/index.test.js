@@ -85,7 +85,6 @@ const sampleSplittingRollup = options =>
     rollup
         .rollup({
             input: ['test/sample-splitting/a.js', 'test/sample-splitting/b.js'],
-            experimentalCodeSplitting: true,
             plugins: [gzip(options)],
         })
         .then(bundle => {
