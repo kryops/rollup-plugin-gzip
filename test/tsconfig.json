@@ -2,6 +2,7 @@
     "extends": "../tsconfig.json",
     "include": ["."],
     "compilerOptions": {
-        "allowJs": true
+        "allowJs": true,
+        "declaration": false
     }
 }
