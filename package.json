@@ -18,7 +18,7 @@
     "clean": "rimraf dist dist-es",
     "format": "prettier --config .prettierrc ./src/**",
     "lint": "tslint --project .",
-    "test": "ava test/**/*.test.js",
+    "test": "jest",
     "prepare": "npm run clean && npm run build && npm run format && npm run lint && npm run test"
   },
   "repository": {
@@ -32,11 +32,14 @@
   },
   "homepage": "https://github.com/kryops/rollup-plugin-gzip#readme",
   "devDependencies": {
+    "@types/jest": "^23.3.11",
     "@types/node": "^10.12.17",
-    "ava": "^1.0.1",
+    "@types/rimraf": "^2.0.2",
+    "jest": "^23.6.0",
     "prettier": "^1.15.3",
     "rimraf": "^2.6.2",
     "rollup": "^1.0.0",
+    "ts-jest": "^23.10.5",
     "tslint": "^5.12.0",
     "tslint-config-prettier": "^1.17.0",
     "typescript": "^3.2.2"

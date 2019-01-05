@@ -7,10 +7,11 @@
         "sourceMap": false,
         "outDir": "./dist",
         "strict": true,
-        "noUnusedLocals": false,
-        "noUnusedParameters": false,
-        "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": false,
+        "noImplicitReturns": true,
+        "noUnusedParameters": false,
 
         "moduleResolution": "node"
     },
