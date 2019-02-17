@@ -124,21 +124,31 @@ describe('index', () => {
     })
 
     it('splitting with regex filter option', () => {
-        return sampleSplittingRollup({
-            filter: /(b|chunk-.+).js$/,
-        })
-            .then(() => fileNotPresent('test/__output/a.js.gz'))
-            .then(() => compareFileWithGzip('test/__output/b.js'))
-            .then(() => compareFileWithGzip('test/__output/chunk-66fda47d.js'))
+        return (
+            sampleSplittingRollup({
+                filter: /(b|chunk-.+).js$/,
+            })
+                .then(() => fileNotPresent('test/__output/a.js.gz'))
+                .then(() => compareFileWithGzip('test/__output/b.js'))
+                // TODO this does not seem to be stable across rollup versions
+                .then(() =>
+                    compareFileWithGzip('test/__output/chunk-ec6316da.js'),
+                )
+        )
     })
 
     it('splitting with function filter option', () => {
-        return sampleSplittingRollup({
-            filter: fileName => fileName[0] !== 'a',
-        })
-            .then(() => fileNotPresent('test/__output/a.js.gz'))
-            .then(() => compareFileWithGzip('test/__output/b.js'))
-            .then(() => compareFileWithGzip('test/__output/chunk-66fda47d.js'))
+        return (
+            sampleSplittingRollup({
+                filter: fileName => fileName[0] !== 'a',
+            })
+                .then(() => fileNotPresent('test/__output/a.js.gz'))
+                .then(() => compareFileWithGzip('test/__output/b.js'))
+                // TODO this does not seem to be stable across rollup versions
+                .then(() =>
+                    compareFileWithGzip('test/__output/chunk-ec6316da.js'),
+                )
+        )
     })
 
     it('splitting with minSize option', () => {
