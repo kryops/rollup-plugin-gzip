@@ -22,6 +22,8 @@ rollup({
 }).then(/* ... */)
 ```
 
+> **NOTE**: This plugin is an ES module. If you import it using `require()`, you have to point to the default export via `require('rollup-plugin-gzip').default`
+
 ### Configuration
 
 **filter** `RegExp | (fileName: string) => boolean`
