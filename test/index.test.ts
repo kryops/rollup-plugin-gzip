@@ -30,7 +30,7 @@ describe('index', () => {
                 })
             })
 
-    const sampleSplittingRollup = (options: GzipPluginOptions) => {
+    const sampleSplittingRollup = async (options: GzipPluginOptions) => {
         const inputOptions = {
             input: ['test/sample-splitting/a.js', 'test/sample-splitting/b.js'],
             plugins: [gzip(options)],
@@ -40,12 +40,14 @@ describe('index', () => {
             ;(inputOptions as any).experimentalCodeSplitting = true
         }
 
-        return rollup.rollup(inputOptions).then(bundle => {
+        const result = await rollup.rollup(inputOptions).then(bundle => {
             return bundle.write({
                 dir: 'test/__output',
                 format: 'cjs',
             })
         })
+
+        return result
     }
 
     it('without options', () => {
@@ -126,14 +128,12 @@ describe('index', () => {
     it('splitting with regex filter option', () => {
         return (
             sampleSplittingRollup({
-                filter: /(b|chunk-.+).js$/,
+                filter: /(b|c-.+).js$/,
             })
                 .then(() => fileNotPresent('test/__output/a.js.gz'))
                 .then(() => compareFileWithGzip('test/__output/b.js'))
                 // TODO this does not seem to be stable across rollup versions
-                .then(() =>
-                    compareFileWithGzip('test/__output/chunk-ec6316da.js'),
-                )
+                .then(() => compareFileWithGzip('test/__output/c-bc471ba3.js'))
         )
     })
 
@@ -145,9 +145,7 @@ describe('index', () => {
                 .then(() => fileNotPresent('test/__output/a.js.gz'))
                 .then(() => compareFileWithGzip('test/__output/b.js'))
                 // TODO this does not seem to be stable across rollup versions
-                .then(() =>
-                    compareFileWithGzip('test/__output/chunk-ec6316da.js'),
-                )
+                .then(() => compareFileWithGzip('test/__output/c-bc471ba3.js'))
         )
     })
 
