@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.3.0 (2020-02-02)
+
+-   Add `type: 'asset'` to bundle asset entries for rollup >= 1.21.0
+
 ## v2.2.0 (2018-12-29)
 
 -   Add support for rollup 1.0.0
