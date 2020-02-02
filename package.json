@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-gzip",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Compress your Rollup bundle with Gzip",
   "keywords": [
     "rollup",
