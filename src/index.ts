@@ -237,8 +237,9 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
                                 ] = compressedContent as any
                             } else {
                                 bundle[compressedFileName] = {
+                                    type: 'asset', // Rollup >= 1.21
                                     fileName: compressedFileName,
-                                    isAsset: true,
+                                    isAsset: true, // Rollup < 1.21
                                     source: compressedContent,
                                 }
                             }
