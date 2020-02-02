@@ -133,7 +133,7 @@ describe('index', () => {
                 .then(() => fileNotPresent('test/__output/a.js.gz'))
                 .then(() => compareFileWithGzip('test/__output/b.js'))
                 // TODO this does not seem to be stable across rollup versions
-                .then(() => compareFileWithGzip('test/__output/c-bc471ba3.js'))
+                .then(() => compareFileWithGzip('test/__output/c-6a11db38.js'))
         )
     })
 
@@ -145,7 +145,7 @@ describe('index', () => {
                 .then(() => fileNotPresent('test/__output/a.js.gz'))
                 .then(() => compareFileWithGzip('test/__output/b.js'))
                 // TODO this does not seem to be stable across rollup versions
-                .then(() => compareFileWithGzip('test/__output/c-bc471ba3.js'))
+                .then(() => compareFileWithGzip('test/__output/c-6a11db38.js'))
         )
     })
 
