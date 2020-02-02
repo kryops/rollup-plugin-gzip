@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import { dirname } from 'path'
 import * as rimraf from 'rimraf'
 import { promisify } from 'util'
 import * as zlib from 'zlib'
@@ -25,7 +26,12 @@ export function compareFileWithGzip(path: string, extension?: string) {
     return new Promise((resolve, reject) => {
         fs.readFile(path, (err, bundleContent) => {
             if (err) {
-                reject('Bundle not found! ' + path)
+                const filesPresent = fs.readdirSync(dirname(path))
+                reject(
+                    `Bundle not found! ${path} - files present: ${filesPresent.join(
+                        ', ',
+                    )}`,
+                )
                 return
             }
 
