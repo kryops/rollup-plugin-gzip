@@ -106,7 +106,10 @@ function getOutputFileContent(
         if (VERSION < '1.0.0') {
             return outputFile as any
         }
-        return outputFile.source
+        return typeof outputFile.source === 'string'
+            ? outputFile.source
+            : // just to be sure, as it is typed string | Uint8Array in rollup 2.0.0
+              Buffer.from(outputFile.source)
     }
 }
 
