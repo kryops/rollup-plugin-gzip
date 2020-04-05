@@ -64,6 +64,27 @@ Defaults to `".gz"`
 
 ### Brotli Compression
 
+Since Node 11.7.0 you can use Node's built-in Brotli compression:
+
+```ts
+import { brotliCompressSync } from 'zlib'
+import { rollup } from 'rollup'
+import gzipPlugin from 'rollup-plugin-gzip'
+
+rollup({
+    input: 'src/index.js',
+    plugins: [
+        gzipPlugin({
+            customCompression: content =>
+                brotliCompressSync(Buffer.from(content)),
+            fileName: '.br',
+        }),
+    ],
+}).then(/* ... */)
+```
+
+For Node < 11.7.0 you need the external [`brotli`](https://www.npmjs.com/package/brotli) module:
+
 ```ts
 import { compress } from 'brotli'
 import { rollup } from 'rollup'
@@ -102,7 +123,7 @@ rollup({
 To support compressing your bundle into multiple different formats, you can add this plugin multiple times with different configurations:
 
 ```ts
-import { compress } from 'brotli'
+import { brotliCompressSync } from 'zlib'
 import { rollup } from 'rollup'
 import gzipPlugin from 'rollup-plugin-gzip'
 
@@ -113,7 +134,8 @@ rollup({
         gzipPlugin(),
         // Brotil compression as .br files
         gzipPlugin({
-            customCompression: content => compress(Buffer.from(content)),
+            customCompression: content =>
+                brotliCompressSync(Buffer.from(content)),
             fileName: '.br',
         }),
     ],
