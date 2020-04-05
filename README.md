@@ -97,6 +97,29 @@ rollup({
 }).then(/* ... */)
 ```
 
+### Compressing into multiple formats
+
+To support compressing your bundle into multiple different formats, you can add this plugin multiple times with different configurations:
+
+```ts
+import { compress } from 'brotli'
+import { rollup } from 'rollup'
+import gzipPlugin from 'rollup-plugin-gzip'
+
+rollup({
+    input: 'src/index.js',
+    plugins: [
+        // GZIP compression as .gz files
+        gzipPlugin(),
+        // Brotil compression as .br files
+        gzipPlugin({
+            customCompression: content => compress(Buffer.from(content)),
+            fileName: '.br',
+        }),
+    ],
+}).then(/* ... */)
+```
+
 ## License
 
 MIT
