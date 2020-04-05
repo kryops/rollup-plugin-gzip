@@ -42,13 +42,13 @@ Specified the minimum size in Bytes for a file to get compressed. Files that are
 
 **additionalFiles** `string[]`
 
-This option allows you to compress additional files outside of the main rollup bundling process. The processing is delayed to make sure the files are written on disk; the delay is controlled through `additionalFilesDelay`.
+This option allows you to compress additional files outside of the main rollup bundling process.
 
 **additionalFilesDelay** `number`
 
-This options sets a delay (ms) before the plugin compresses the files specified through `additionalFiles`. Increase this value if your artifacts take a long time to generate.
+This options sets a delay (ms) before the plugin compresses the files specified through `additionalFiles`.
 
-Defaults to `2000`
+Defaults to `0` for Rollup >= 2.0.0, `2000` for older versions of Rollup
 
 **customCompression** `(content: string | Buffer) => string | Buffer | Promise<string | Buffer>`
 

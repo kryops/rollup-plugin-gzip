@@ -102,7 +102,7 @@ describe('index', () => {
         )
     })
 
-    it('with additionalFiles option', () => {
+    it('with additionalFiles option (with delay)', () => {
         return writeFiles([
             ['test/__output/test1.txt', 'This is a test'],
             ['test/__output/test2.txt', 'This too'],
@@ -121,6 +121,28 @@ describe('index', () => {
             )
             .then(() => compareFileWithGzip('test/__output/bundle.js'))
             .then(() => delay(3500))
+            .then(() => compareFileWithGzip('test/__output/test1.txt'))
+            .then(() => compareFileWithGzip('test/__output/test2.txt'))
+    })
+
+    it('with additionalFiles option (without delay)', () => {
+        return writeFiles([
+            ['test/__output/test1.txt', 'This is a test'],
+            ['test/__output/test2.txt', 'This too'],
+        ])
+            .then(() =>
+                sampleRollup({
+                    gzipOptions: {
+                        level: 9,
+                    },
+                    additionalFiles: [
+                        'test/__output/test1.txt',
+                        'test/__output/test2.txt',
+                    ],
+                    additionalFilesDelay: 0,
+                }),
+            )
+            .then(() => compareFileWithGzip('test/__output/bundle.js'))
             .then(() => compareFileWithGzip('test/__output/test1.txt'))
             .then(() => compareFileWithGzip('test/__output/test2.txt'))
     })
