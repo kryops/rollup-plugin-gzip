@@ -8,10 +8,14 @@
     "gzip",
     "compress"
   ],
+  "type": "commonjs",
   "main": "./dist/index.js",
-  "jsnext:main": "./dist-es/index.js",
   "module": "./dist-es/index.js",
-  "es2015": "./dist-es/index.js",
+  "exports": {
+    "require": "./dist/index.js",
+    "import": "./dist-es/index.js",
+    "default": "./dist/index.js"
+  },
   "typings": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc && tsc --project tsconfig-es.json",

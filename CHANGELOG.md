@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+-   Provide conditional module exports for ESM ([#12](https://github.com/kryops/rollup-plugin-gzip/issues/12))
+
 ## v2.3.0 (2020-02-02)
 
 -   Add `type: 'asset'` to bundle asset entries for rollup >= 1.21.0
