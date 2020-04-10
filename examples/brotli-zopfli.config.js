@@ -1,4 +1,5 @@
 import { brotliCompressSync } from 'zlib'
+
 import gzipPlugin from 'rollup-plugin-gzip'
 import { gzipAsync } from '@gfx/zopfli'
 

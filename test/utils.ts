@@ -1,8 +1,9 @@
 import * as fs from 'fs'
 import { dirname } from 'path'
-import * as rimraf from 'rimraf'
 import { promisify } from 'util'
 import * as zlib from 'zlib'
+
+import * as rimraf from 'rimraf'
 import * as rollup from 'rollup'
 
 import gzip from '../dist/index'

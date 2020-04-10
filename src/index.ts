@@ -1,5 +1,8 @@
 import { readFile, writeFile } from 'fs'
 import { basename } from 'path'
+import { promisify } from 'util'
+import { gzip, ZlibOptions } from 'zlib'
+
 import {
     OutputAsset,
     OutputChunk,
@@ -7,8 +10,10 @@ import {
     Plugin,
     VERSION,
 } from 'rollup'
-import { isFunction, isRegExp, promisify } from 'util'
-import { gzip, ZlibOptions } from 'zlib'
+
+const isFunction = (arg: unknown): arg is Function => typeof arg === 'function'
+const isRegExp = (arg: unknown): arg is RegExp =>
+    Object.prototype.toString.call(arg) === '[object RegExp]'
 
 export type StringMappingOption = (originalString: string) => string
 export type CustomCompressionOption = (

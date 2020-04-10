@@ -9,11 +9,12 @@
             "problemMatcher": ["$tsc"]
         },
         {
+            "label": "ESLint",
             "type": "npm",
             "script": "lint",
-            "problemMatcher": {
-                "base": "$tslint5",
-                "fileLocation": "relative"
+            "problemMatcher": ["$eslint-stylish"],
+            "presentation": {
+                "reveal": "never"
             }
         }
     ]

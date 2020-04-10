@@ -1,4 +1,6 @@
+/* eslint-disable node/no-unsupported-features/node-builtins */
 import fs from 'fs'
+
 import gzipPlugin from 'rollup-plugin-gzip'
 
 export default {
