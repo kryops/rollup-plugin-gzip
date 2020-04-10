@@ -10,15 +10,15 @@
   ],
   "type": "commonjs",
   "main": "./dist/index.js",
-  "module": "./dist-es/index.js",
+  "module": "./dist-es/index.mjs",
   "exports": {
     "require": "./dist/index.js",
-    "import": "./dist-es/index.js",
+    "import": "./dist-es/index.mjs",
     "default": "./dist/index.js"
   },
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc && tsc --project tsconfig-es.json",
+    "build": "tsc && tsc --project tsconfig-es.json && node rename-dist-es.js",
     "clean": "rimraf dist dist-es",
     "docker-node10": "rm -rf node_modules && docker run --rm --user $(id -u):$(id -g) -w='/app' --mount type=bind,source=$(pwd),target=/app node:10-alpine yarn && rm -rf node_modules && yarn",
     "examples": "npm pack && yarn --cwd examples",

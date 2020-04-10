@@ -9,7 +9,8 @@
     "basic": "rollup -c basic.config.js",
     "additionalFiles": "rollup -c additional-files.config.js",
     "brotli-zopfli": "rollup -c brotli-zopfli.config.js",
-    "prepare": "run-s clean basic clean additionalFiles clean brotli-zopfli"
+    "esm": "rollup -c esm.config.mjs",
+    "prepare": "run-s clean basic clean additionalFiles clean brotli-zopfli esm"
   },
   "dependencies": {
     "@gfx/zopfli": "^1.0.14",
