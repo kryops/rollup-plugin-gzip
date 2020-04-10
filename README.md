@@ -62,6 +62,8 @@ Defaults to `".gz"`
 
 ## Examples
 
+> NOTE: These examples use Rollup's JavaScript API. For Rollup configuration file examples, check out the `/examples` directory.
+
 ### Brotli Compression
 
 Since Node 11.7.0 you can use Node's built-in Brotli compression:
@@ -133,7 +135,8 @@ rollup({
     input: 'src/index.js',
     plugins: [
         gzipPlugin({
-            customCompression: content => gzipAsync(Buffer.from(content)),
+            customCompression: content =>
+                gzipAsync(Buffer.from(content), { numiterations: 15 }),
         }),
     ],
 }).then(/* ... */)

@@ -1,0 +1,21 @@
+{
+  "name": "roolup-plugin-gzip-examples",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "clean": "rimraf dist",
+    "basic": "rollup -c basic.config.js",
+    "additionalFiles": "rollup -c additional-files.config.js",
+    "brotli-zopfli": "rollup -c brotli-zopfli.config.js",
+    "prepare": "run-s clean basic clean additionalFiles clean brotli-zopfli"
+  },
+  "dependencies": {
+    "@gfx/zopfli": "^1.0.14",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.4.0",
+    "rollup-plugin-gzip": "../rollup-plugin-gzip-2.3.0.tgz"
+  }
+}
