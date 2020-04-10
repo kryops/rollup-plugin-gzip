@@ -364,9 +364,9 @@ rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
-rollup-plugin-gzip@../rollup-plugin-gzip-2.3.0.tgz:
-  version "2.3.0"
-  resolved "../rollup-plugin-gzip-2.3.0.tgz#f6e59fa1b83d0f6ac42e5d6b832ddfdfd1d551d7"
+rollup-plugin-gzip@../rollup-plugin-gzip-2.4.0.tgz:
+  version "2.4.0"
+  resolved "../rollup-plugin-gzip-2.4.0.tgz#ca07e91f756e7e4b40368ed5bf7673e29954e19a"
 
 rollup@^2.4.0:
   version "2.4.0"

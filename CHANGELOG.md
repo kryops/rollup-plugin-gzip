@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v2.4.0 (2020-04-10)
 
 -   Provide conditional module exports for ESM ([#12](https://github.com/kryops/rollup-plugin-gzip/issues/12))
 -   Default `additionalFilesDelay` to `0` for Rollup >= 2.0.0 ([#9](https://github.com/kryops/rollup-plugin-gzip/issues/9))
