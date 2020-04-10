@@ -1,54 +1,10 @@
 import * as fs from 'fs'
-import * as rollup from 'rollup'
 
-import gzip from '../dist/index'
-import { GzipPluginOptions } from '../src/index'
-
-import {
-    cleanup,
-    compareFileWithGzip,
-    delay,
-    fileNotPresent,
-    writeFiles,
-} from './utils'
+import { cleanup, compareFileWithGzip, sampleRollup } from './utils'
 
 describe('index', () => {
     beforeEach(() => cleanup())
     afterEach(() => cleanup())
-
-    const sampleRollup = (options?: GzipPluginOptions) =>
-        rollup
-            .rollup({
-                input: 'test/sample/index.js',
-                plugins: [gzip(options)],
-            })
-            .then(bundle => {
-                return bundle.write({
-                    file: 'test/__output/bundle.js',
-                    format: 'iife',
-                    sourcemap: true,
-                })
-            })
-
-    const sampleSplittingRollup = async (options: GzipPluginOptions) => {
-        const inputOptions = {
-            input: ['test/sample-splitting/a.js', 'test/sample-splitting/b.js'],
-            plugins: [gzip(options)],
-        }
-
-        if (rollup.VERSION < '1.0.0') {
-            ;(inputOptions as any).experimentalCodeSplitting = true
-        }
-
-        const result = await rollup.rollup(inputOptions).then(bundle => {
-            return bundle.write({
-                dir: 'test/__output',
-                format: 'cjs',
-            })
-        })
-
-        return result
-    }
 
     it('without options', () => {
         return sampleRollup().then(() =>
@@ -100,83 +56,5 @@ describe('index', () => {
                     )
                 }),
         )
-    })
-
-    it('with additionalFiles option (with delay)', () => {
-        return writeFiles([
-            ['test/__output/test1.txt', 'This is a test'],
-            ['test/__output/test2.txt', 'This too'],
-        ])
-            .then(() =>
-                sampleRollup({
-                    gzipOptions: {
-                        level: 9,
-                    },
-                    additionalFiles: [
-                        'test/__output/test1.txt',
-                        'test/__output/test2.txt',
-                    ],
-                    additionalFilesDelay: 2500,
-                }),
-            )
-            .then(() => compareFileWithGzip('test/__output/bundle.js'))
-            .then(() => delay(3500))
-            .then(() => compareFileWithGzip('test/__output/test1.txt'))
-            .then(() => compareFileWithGzip('test/__output/test2.txt'))
-    })
-
-    it('with additionalFiles option (without delay)', () => {
-        return writeFiles([
-            ['test/__output/test1.txt', 'This is a test'],
-            ['test/__output/test2.txt', 'This too'],
-        ])
-            .then(() =>
-                sampleRollup({
-                    gzipOptions: {
-                        level: 9,
-                    },
-                    additionalFiles: [
-                        'test/__output/test1.txt',
-                        'test/__output/test2.txt',
-                    ],
-                    additionalFilesDelay: 0,
-                }),
-            )
-            .then(() => compareFileWithGzip('test/__output/bundle.js'))
-            .then(() => compareFileWithGzip('test/__output/test1.txt'))
-            .then(() => compareFileWithGzip('test/__output/test2.txt'))
-    })
-
-    it('splitting with regex filter option', () => {
-        return (
-            sampleSplittingRollup({
-                filter: /(b|c-.+).js$/,
-            })
-                .then(() => fileNotPresent('test/__output/a.js.gz'))
-                .then(() => compareFileWithGzip('test/__output/b.js'))
-                // TODO this does not seem to be stable across rollup versions
-                .then(() => compareFileWithGzip('test/__output/c-6a11db38.js'))
-        )
-    })
-
-    it('splitting with function filter option', () => {
-        return (
-            sampleSplittingRollup({
-                filter: fileName => fileName[0] !== 'a',
-            })
-                .then(() => fileNotPresent('test/__output/a.js.gz'))
-                .then(() => compareFileWithGzip('test/__output/b.js'))
-                // TODO this does not seem to be stable across rollup versions
-                .then(() => compareFileWithGzip('test/__output/c-6a11db38.js'))
-        )
-    })
-
-    it('splitting with minSize option', () => {
-        return sampleSplittingRollup({
-            minSize: 80,
-        })
-            .then(() => fileNotPresent('test/__output/c.js.gz'))
-            .then(() => compareFileWithGzip('test/__output/a.js'))
-            .then(() => compareFileWithGzip('test/__output/b.js'))
     })
 })

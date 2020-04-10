@@ -3,6 +3,10 @@ import { dirname } from 'path'
 import * as rimraf from 'rimraf'
 import { promisify } from 'util'
 import * as zlib from 'zlib'
+import * as rollup from 'rollup'
+
+import gzip from '../dist/index'
+import { GzipPluginOptions } from '../src/index'
 
 const writeFilePromise = promisify(fs.writeFile)
 const createDirPromise = promisify(fs.mkdir)
@@ -10,7 +14,25 @@ const createDirPromise = promisify(fs.mkdir)
 export function cleanup() {
     return new Promise(resolve => {
         rimraf('test/__output/**', () => resolve())
-    })
+    }).then(() => createDirPromise('test/__output', { recursive: true }))
+}
+
+export function sampleRollup(
+    options?: GzipPluginOptions,
+    plugins: rollup.Plugin[] = [],
+) {
+    return rollup
+        .rollup({
+            input: 'test/sample/index.js',
+            plugins: [...plugins, gzip(options)],
+        })
+        .then(bundle => {
+            return bundle.write({
+                file: 'test/__output/bundle.js',
+                format: 'iife',
+                sourcemap: true,
+            })
+        })
 }
 
 export function fileNotPresent(path: string) {
@@ -53,7 +75,7 @@ export function compareFileWithGzip(path: string, extension?: string) {
 }
 
 export function writeFiles(files: Array<[string, string]>) {
-    return createDirPromise('test/__output').then(() =>
+    return createDirPromise('test/__output', { recursive: true }).then(() =>
         Promise.all(files.map(file => writeFilePromise(file[0], file[1]))),
     )
 }

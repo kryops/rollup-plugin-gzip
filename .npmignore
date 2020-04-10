@@ -16,5 +16,6 @@ yarn.lock
 .prettierignore
 tsconfig.json
 tsconfig-es.json
+tsconfig-test.json
 tslint.json
 dist-es/index.d.ts
