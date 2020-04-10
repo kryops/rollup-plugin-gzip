@@ -106,12 +106,9 @@ rollup({
 Zopfli support is available through several different external packages, each of which comes with advantages and disadvantages:
 
 -   [`node-zopfli`](https://www.npmjs.com/package/node-zopfli) (or [`node-zopfli-es`](https://www.npmjs.com/package/node-zopfli-es)) - native version, longer installation time, might require build tooling
--   [`@gfx/zopfli`](https://www.npmjs.com/package/@gfx/zopfli) - WebAssembly version, faster installation, slower compression
-
-The API of both of these packages is compatible.
 
 ```ts
-import { gzip } from 'node-zopfli'
+import { gzipSync } from 'node-zopfli'
 import { rollup } from 'rollup'
 import gzipPlugin from 'rollup-plugin-gzip'
 
@@ -119,7 +116,24 @@ rollup({
     input: 'src/index.js',
     plugins: [
         gzipPlugin({
-            customCompression: content => gzip(Buffer.from(content)),
+            customCompression: content => gzipSync(Buffer.from(content)),
+        }),
+    ],
+}).then(/* ... */)
+```
+
+-   [`@gfx/zopfli`](https://www.npmjs.com/package/@gfx/zopfli) - WebAssembly version, faster installation, slower compression
+
+```ts
+import { gzipAsync } from '@gfx/zopfli'
+import { rollup } from 'rollup'
+import gzipPlugin from 'rollup-plugin-gzip'
+
+rollup({
+    input: 'src/index.js',
+    plugins: [
+        gzipPlugin({
+            customCompression: content => gzipAsync(Buffer.from(content)),
         }),
     ],
 }).then(/* ... */)
