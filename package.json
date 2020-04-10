@@ -20,6 +20,7 @@
   "scripts": {
     "build": "tsc && tsc --project tsconfig-es.json",
     "clean": "rimraf dist dist-es",
+    "docker-node10": "rm -rf node_modules && docker run --rm --user $(id -u):$(id -g) -w='/app' --mount type=bind,source=$(pwd),target=/app node:10-alpine yarn && rm -rf node_modules && yarn",
     "examples": "npm pack && yarn --cwd examples",
     "format": "prettier --write --config .prettierrc './src/**'",
     "lint": "eslint --ext .js,.ts  .",
