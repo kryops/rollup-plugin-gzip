@@ -24,7 +24,7 @@ export interface GzipPluginOptions {
     /**
      * Control which of the output files to compress
      *
-     * Defaults to `/\.(js|json|css)$/`
+     * Defaults to `/\.(js|json|css|html)$/`
      */
     filter?: RegExp | ((fileName: string) => boolean)
 
@@ -185,7 +185,7 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
                         // file name filter option check
 
                         const fileNameFilter =
-                            options.filter || /\.(js|mjs|json|css)$/
+                            options.filter || /\.(js|mjs|json|css|html)$/
 
                         if (
                             isRegExp(fileNameFilter) &&
