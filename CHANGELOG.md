@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.5.0 (2020-05-06)
+
+-   Compress HTML files by default ([@dilyanpalauzov](https://github.com/dilyanpalauzov) in [#14](https://github.com/kryops/rollup-plugin-gzip/pull/14))
+
 ## v2.4.0 (2020-04-10)
 
 -   Provide conditional module exports for ESM ([#12](https://github.com/kryops/rollup-plugin-gzip/issues/12))
