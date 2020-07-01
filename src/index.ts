@@ -11,7 +11,8 @@ import {
     VERSION,
 } from 'rollup'
 
-const isFunction = (arg: unknown): arg is Function => typeof arg === 'function'
+const isFunction = (arg: unknown): arg is (...args: any[]) => any =>
+    typeof arg === 'function'
 const isRegExp = (arg: unknown): arg is RegExp =>
     Object.prototype.toString.call(arg) === '[object RegExp]'
 

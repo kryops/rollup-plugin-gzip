@@ -21,6 +21,7 @@ module.exports = {
         '@typescript-eslint/camelcase': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-member-accessibility': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-empty-function': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
@@ -35,6 +36,7 @@ module.exports = {
         ],
         'jest/expect-expect': 'off',
         'node/no-missing-import': 'off',
+        'node/no-unsupported-features/es-syntax': 'off',
         'prettier/prettier': 'warn',
     },
     overrides: [

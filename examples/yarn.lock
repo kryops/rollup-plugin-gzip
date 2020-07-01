@@ -368,10 +368,10 @@ rollup-plugin-gzip@../rollup-plugin-gzip-2.5.0.tgz:
   version "2.5.0"
   resolved "../rollup-plugin-gzip-2.5.0.tgz#786650e7bddf86d7f723c205c3e3018ea727388c"
 
-rollup@^2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.8.0.tgz#a1d63fa8331f5c362f025a7fee78b86d4ada5cef"
-  integrity sha512-hyjpreMA0BTNrO68o4wCtcktwYTK8o1UtauOqsPniwDGzN2PvNaKmwa/RHmjNHJMrt6ItY2C7XjpT7TDf6WmJw==
+rollup@^2.18.1:
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.18.1.tgz#1662c679da5dfc89ec6fda75951a2bcca1a4f77d"
+  integrity sha512-w4X77ADA+WTGlapC8Z6yggdJtODw3SBl6R2LSkA7ZW5MtdkgcB7sfaSD1UWyx8diXbMcGIb0eI9gCx/dyqOgNQ==
   optionalDependencies:
     fsevents "~2.1.2"
 
