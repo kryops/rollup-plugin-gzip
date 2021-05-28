@@ -13,7 +13,7 @@ const writeFilePromise = promisify(fs.writeFile)
 const createDirPromise = promisify(fs.mkdir)
 
 export function cleanup() {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         rimraf('test/__output/**', () => resolve())
     }).then(() => createDirPromise('test/__output', { recursive: true }))
 }
@@ -37,7 +37,7 @@ export function sampleRollup(
 }
 
 export function fileNotPresent(path: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
         fs.stat(path, (err, stats) => {
             if (!err) reject('File should not be present: ' + path)
             resolve()
@@ -46,7 +46,7 @@ export function fileNotPresent(path: string) {
 }
 
 export function compareFileWithGzip(path: string, extension?: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
         fs.readFile(path, (err, bundleContent) => {
             if (err) {
                 const filesPresent = fs.readdirSync(dirname(path))
@@ -82,5 +82,7 @@ export function writeFiles(files: Array<[string, string]>) {
 }
 
 export function delay(ms = 2500) {
-    return new Promise((resolve, reject) => setTimeout(() => resolve(), ms))
+    return new Promise<void>((resolve, reject) =>
+        setTimeout(() => resolve(), ms),
+    )
 }

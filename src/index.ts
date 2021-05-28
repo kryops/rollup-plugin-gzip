@@ -222,9 +222,8 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
                             .then(compressedContent => {
                                 const compressedFileName = mapFileName(fileName)
                                 if (VERSION < '1.0.0') {
-                                    bundle[
-                                        compressedFileName
-                                    ] = compressedContent as any
+                                    bundle[compressedFileName] =
+                                        compressedContent as any
                                 } else {
                                     bundle[compressedFileName] = {
                                         type: 'asset', // Rollup >= 1.21

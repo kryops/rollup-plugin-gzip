@@ -29,7 +29,7 @@ describe('index', () => {
             customCompression: content => content.toString() + 'XXX',
         }).then(
             () =>
-                new Promise((resolve, reject) => {
+                new Promise<void>((resolve, reject) => {
                     fs.readFile(
                         'test/__output/bundle.js',
                         (err, bundleContent) => {
