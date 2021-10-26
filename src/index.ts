@@ -69,6 +69,13 @@ export interface GzipPluginOptions {
      * Defaults to `.gz`
      */
     fileName?: string | StringMappingOption
+    /**
+     * Set a custom destination of all the compressed files
+     * returning the file name.
+     *
+     * Defaults to `./compressed`
+     */
+    destination?: string
 }
 
 const readFilePromise = promisify(readFile)
@@ -258,8 +265,21 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
                                                 doCompress(fileContent),
                                             )
                                             .then(compressedContent => {
+                                                console.log(
+                                                    `${options.destination}/${filePath}`,
+                                                )
+                                                let testpath = filePath.replace(
+                                                    'public/',
+                                                    '',
+                                                )
+                                                writeFilePromise(
+                                                    mapFileName(
+                                                        `${options.destination}/${testpath}`,
+                                                    ),
+                                                    compressedContent,
+                                                )
                                                 return writeFilePromise(
-                                                    mapFileName(filePath),
+                                                    mapFileName(`${filePath}`),
                                                     compressedContent,
                                                 )
                                             })
