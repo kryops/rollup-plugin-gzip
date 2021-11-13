@@ -1,4 +1,4 @@
-import * as fs from 'fs/promises'
+import * as fs from 'fs'
 
 import {
   cleanup,
@@ -6,6 +6,10 @@ import {
   sampleRollup,
   sampleVite,
 } from './utils'
+
+// Unit tests do not run on Node 10 anyway
+// eslint-disable-next-line node/no-unsupported-features/node-builtins
+const readFile = fs.promises.readFile
 
 describe('index', () => {
   beforeEach(() => cleanup())
@@ -44,11 +48,8 @@ describe('index', () => {
       const expectedFileName = await sampleFn({
         customCompression: content => content.toString() + 'XXX',
       })
-      const bundle = await fs.readFile(
-        'test/__output/' + expectedFileName,
-        'utf8',
-      )
-      const compressed = await fs.readFile(
+      const bundle = await readFile('test/__output/' + expectedFileName, 'utf8')
+      const compressed = await readFile(
         'test/__output/' + expectedFileName + '.gz',
         'utf8',
       )

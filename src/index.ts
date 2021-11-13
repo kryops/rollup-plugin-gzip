@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'fs/promises'
+import * as fs from 'fs'
 import { basename, dirname, join } from 'path'
 import { promisify } from 'util'
 import { gzip, ZlibOptions } from 'zlib'
@@ -11,6 +11,8 @@ import {
   VERSION,
 } from 'rollup'
 
+const readFile = promisify(fs.readFile)
+const writeFile = promisify(fs.writeFile)
 const gzipPromise = promisify(gzip)
 
 const isFunction = (arg: unknown): arg is (...args: any[]) => any =>
