@@ -2,7 +2,7 @@ import * as rollup from 'rollup'
 
 import {
   cleanup,
-  compareFileWithGzip,
+  expectFileHasBeenCompressed,
   delay,
   writeFiles,
   sampleRollup,
@@ -25,35 +25,31 @@ describe('additionalFiles', () => {
         ]),
       )
 
-      it('with delay', () => {
-        return sampleFn({
+      it('with delay', async () => {
+        const expectedFileName = await sampleFn({
           additionalFiles: [
             'test/__output/test1.txt',
             'test/__output/test2.txt',
           ],
-          additionalFilesDelay: 2500,
+          additionalFilesDelay: 500,
         })
-          .then(expectedFileName =>
-            compareFileWithGzip('test/__output/' + expectedFileName),
-          )
-          .then(() => delay(3500))
-          .then(() => compareFileWithGzip('test/__output/test1.txt'))
-          .then(() => compareFileWithGzip('test/__output/test2.txt'))
+        await expectFileHasBeenCompressed('test/__output/' + expectedFileName)
+        await delay(1000)
+        await expectFileHasBeenCompressed('test/__output/test1.txt')
+        await expectFileHasBeenCompressed('test/__output/test2.txt')
       })
 
-      it('without delay', () => {
-        return sampleFn({
+      it('without delay', async () => {
+        const expectedFileName = await sampleFn({
           additionalFiles: [
             'test/__output/test1.txt',
             'test/__output/test2.txt',
           ],
           additionalFilesDelay: 0,
         })
-          .then(expectedFileName =>
-            compareFileWithGzip('test/__output/' + expectedFileName),
-          )
-          .then(() => compareFileWithGzip('test/__output/test1.txt'))
-          .then(() => compareFileWithGzip('test/__output/test2.txt'))
+        await expectFileHasBeenCompressed('test/__output/' + expectedFileName)
+        await expectFileHasBeenCompressed('test/__output/test1.txt')
+        await expectFileHasBeenCompressed('test/__output/test2.txt')
       })
     })
 
@@ -69,27 +65,25 @@ describe('additionalFiles', () => {
         },
       }
 
-      it('with delay', () => {
-        return sampleFn(
+      it('with delay', async () => {
+        const expectedFileName = await sampleFn(
           {
             additionalFiles: [
               'test/__output/test1.txt',
               'test/__output/test2.txt',
             ],
-            additionalFilesDelay: 2500,
+            additionalFilesDelay: 500,
           },
           [additionalPlugin],
         )
-          .then(expectedFileName =>
-            compareFileWithGzip('test/__output/' + expectedFileName),
-          )
-          .then(() => delay(3500))
-          .then(() => compareFileWithGzip('test/__output/test1.txt'))
-          .then(() => compareFileWithGzip('test/__output/test2.txt'))
+        await expectFileHasBeenCompressed('test/__output/' + expectedFileName)
+        await delay(1000)
+        await expectFileHasBeenCompressed('test/__output/test1.txt')
+        await expectFileHasBeenCompressed('test/__output/test2.txt')
       })
 
-      it('without delay', () => {
-        return sampleFn(
+      it('without delay', async () => {
+        const expectedFileName = await sampleFn(
           {
             additionalFiles: [
               'test/__output/test1.txt',
@@ -99,11 +93,9 @@ describe('additionalFiles', () => {
           },
           [additionalPlugin],
         )
-          .then(expectedFileName =>
-            compareFileWithGzip('test/__output/' + expectedFileName),
-          )
-          .then(() => compareFileWithGzip('test/__output/test1.txt'))
-          .then(() => compareFileWithGzip('test/__output/test2.txt'))
+        await expectFileHasBeenCompressed('test/__output/' + expectedFileName)
+        await expectFileHasBeenCompressed('test/__output/test1.txt')
+        await expectFileHasBeenCompressed('test/__output/test2.txt')
       })
     })
 
@@ -118,28 +110,26 @@ describe('additionalFiles', () => {
                 ['test/__output/test1.txt', 'This is a test'],
                 ['test/__output/test2.txt', 'This too'],
               ]),
-            1000,
+            500,
           )
         },
       }
 
-      it('with delay', () => {
-        return sampleFn(
+      it('with delay', async () => {
+        const expectedFileName = await sampleFn(
           {
             additionalFiles: [
               'test/__output/test1.txt',
               'test/__output/test2.txt',
             ],
-            additionalFilesDelay: 2000,
+            additionalFilesDelay: 1000,
           },
           [additionalPlugin],
         )
-          .then(expectedFileName =>
-            compareFileWithGzip('test/__output/' + expectedFileName),
-          )
-          .then(() => delay(3000))
-          .then(() => compareFileWithGzip('test/__output/test1.txt'))
-          .then(() => compareFileWithGzip('test/__output/test2.txt'))
+        await expectFileHasBeenCompressed('test/__output/' + expectedFileName)
+        await delay(1500)
+        await expectFileHasBeenCompressed('test/__output/test1.txt')
+        await expectFileHasBeenCompressed('test/__output/test2.txt')
       })
     })
   })

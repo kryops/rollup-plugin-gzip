@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2018", // Node 10
     "module": "commonjs",
-    "lib": ["es5", "es2015"],
+    "lib": ["es2018"],
     "declaration": true,
     "sourceMap": false,
     "outDir": "./dist",

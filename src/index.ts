@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'fs'
+import { readFile, writeFile } from 'fs/promises'
 import { basename, dirname, join } from 'path'
 import { promisify } from 'util'
 import { gzip, ZlibOptions } from 'zlib'
@@ -10,6 +10,8 @@ import {
   Plugin,
   VERSION,
 } from 'rollup'
+
+const gzipPromise = promisify(gzip)
 
 const isFunction = (arg: unknown): arg is (...args: any[]) => any =>
   typeof arg === 'function'
@@ -52,7 +54,7 @@ export interface GzipPluginOptions {
    * This options sets a delay (ms) before the plugin compresses the files specified through `additionalFiles`.
    * Increase this value if your artifacts take a long time to generate.
    *
-   * Defaults to `2000`
+   * Defaults to `0`
    */
   additionalFilesDelay?: number
 
@@ -70,9 +72,6 @@ export interface GzipPluginOptions {
    */
   fileName?: string | StringMappingOption
 }
-
-const readFilePromise = promisify(readFile)
-const writeFilePromise = promisify(writeFile)
 
 // functionality partially copied from rollup
 
@@ -118,7 +117,7 @@ function getOutputFileContent(
 
 // actual plugin code
 
-function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
+function performInitChecks(options: GzipPluginOptions) {
   if (VERSION < '2.0.0') {
     console.error(
       '[rollup-plugin-gzip] This plugin supports rollup version >= 2.0.0!',
@@ -150,119 +149,109 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
       '[rollup-plugin-gzip] The "delay" option was renamed to "additionalFilesDelay"!',
     )
   }
+}
 
-  const compressGzip: CustomCompressionOption = fileContent => {
-    return new Promise((resolve, reject) => {
-      gzip(fileContent, options.gzipOptions || {}, (err, result) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(result)
-        }
-      })
-    })
+function gzipPlugin(explicitOptions: GzipPluginOptions = {}): Plugin {
+  performInitChecks(explicitOptions)
+
+  const options: Required<GzipPluginOptions> = {
+    // default options
+    filter: /\.(js|mjs|json|css|html)$/,
+    fileName: '.gz',
+    customCompression: (fileContent: string | Buffer) =>
+      gzipPromise(fileContent, options.gzipOptions),
+    gzipOptions: {},
+    additionalFiles: [],
+    additionalFilesDelay: 0,
+    minSize: 0,
+
+    ...explicitOptions,
   }
-
-  const doCompress = options.customCompression || compressGzip
 
   const mapFileName: StringMappingOption = isFunction(options.fileName)
     ? (options.fileName as StringMappingOption)
-    : (fileName: string) => fileName + (options.fileName || '.gz')
+    : (fileName: string) => fileName + options.fileName
 
   const plugin: Plugin = {
     name: 'gzip',
 
-    writeBundle(outputOptions, bundle) {
+    async writeBundle(outputOptions, bundle) {
       const outputDir = outputOptions.file
         ? dirname(outputOptions.file)
         : outputOptions.dir || ''
 
-      return Promise.all(
-        Object.keys(bundle)
-          .map(fileName => {
-            const fileEntry = bundle[fileName]
+      const compressBundleFile = async (fileName: string) => {
+        const fileEntry = bundle[fileName]
 
-            // file name filter option check
+        // filter check
+        if (isRegExp(options.filter) && !fileName.match(options.filter)) {
+          return Promise.resolve()
+        }
 
-            const fileNameFilter = options.filter || /\.(js|mjs|json|css|html)$/
+        if (
+          isFunction(options.filter) &&
+          !(options.filter as (x: string) => boolean)(fileName)
+        ) {
+          return Promise.resolve()
+        }
 
-            if (isRegExp(fileNameFilter) && !fileName.match(fileNameFilter)) {
-              return Promise.resolve()
-            }
+        const fileContent = getOutputFileContent(
+          fileName,
+          fileEntry,
+          outputOptions,
+        )
 
-            if (
-              isFunction(fileNameFilter) &&
-              !(fileNameFilter as (x: string) => boolean)(fileName)
-            ) {
-              return Promise.resolve()
-            }
+        // minSize option check
+        if (options.minSize && options.minSize > fileContent.length) {
+          return Promise.resolve()
+        }
 
-            const fileContent = getOutputFileContent(
-              fileName,
-              fileEntry,
-              outputOptions,
-            )
+        try {
+          await writeFile(
+            join(outputDir, mapFileName(fileName)),
+            await options.customCompression(fileContent),
+          )
+        } catch (error) {
+          console.error(error)
+          return Promise.reject(
+            '[rollup-plugin-gzip] Error compressing file ' + fileName,
+          )
+        }
+      }
 
-            // minSize option check
-            if (options.minSize && options.minSize > fileContent.length) {
-              return Promise.resolve()
-            }
+      const compressAdditionalFile = async (filePath: string) => {
+        try {
+          const fileContent = await readFile(filePath)
+          await writeFile(
+            mapFileName(filePath),
+            await options.customCompression(fileContent),
+          )
+          return Promise.resolve()
+        } catch (error) {
+          console.error(error)
+          return Promise.reject(
+            '[rollup-plugin-gzip] Error compressing additional file ' +
+              filePath +
+              '. Please check the spelling of your configured additionalFiles. ' +
+              'You might also have to increase the value of the additionalFilesDelay option.',
+          )
+        }
+      }
 
-            return Promise.resolve(doCompress(fileContent))
-              .then(compressedContent => {
-                const compressedFileName = mapFileName(fileName)
-                return writeFilePromise(
-                  join(outputDir, compressedFileName),
-                  compressedContent,
-                )
-              })
-              .catch((err: any) => {
-                console.error(err)
-                return Promise.reject(
-                  '[rollup-plugin-gzip] Error compressing file ' + fileName,
-                )
-              })
-          })
-          .concat([
-            (() => {
-              if (!options.additionalFiles || !options.additionalFiles.length)
-                return Promise.resolve()
+      const promises: Promise<any>[] =
+        Object.keys(bundle).map(compressBundleFile)
 
-              const compressAdditionalFiles = () =>
-                Promise.all(
-                  options.additionalFiles!.map(filePath =>
-                    readFilePromise(filePath)
-                      .then(fileContent => doCompress(fileContent))
-                      .then(compressedContent => {
-                        return writeFilePromise(
-                          mapFileName(filePath),
-                          compressedContent,
-                        )
-                      })
-                      .catch((err: any) => {
-                        return Promise.reject(
-                          '[rollup-plugin-gzip] Error compressing additional file ' +
-                            filePath +
-                            '. Please check the spelling of your configured additionalFiles. ' +
-                            'You might also have to increase the value of the additionalFilesDelay option.',
-                        )
-                      }),
-                  ),
-                ) as Promise<any>
+      if (!options.additionalFilesDelay) {
+        promises.push(...options.additionalFiles.map(compressAdditionalFile))
+      } else {
+        // if a delay is set, we do not await the compression of additional files
+        setTimeout(
+          () => options.additionalFiles.map(compressAdditionalFile),
+          options.additionalFilesDelay,
+        )
+      }
 
-              // additional files can be processed outside of rollup after a delay
-              // for older plugins or plugins that write to disk (circumventing rollup) without awaiting
-              const additionalFilesDelay = options.additionalFilesDelay || 0
-
-              if (additionalFilesDelay) {
-                setTimeout(compressAdditionalFiles, additionalFilesDelay)
-                return Promise.resolve()
-              } else {
-                return compressAdditionalFiles()
-              }
-            })(),
-          ]),
-      ) as Promise<any>
+      await Promise.all(promises)
     },
 
     // vite options

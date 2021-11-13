@@ -1,6 +1,11 @@
-import * as fs from 'fs'
+import * as fs from 'fs/promises'
 
-import { cleanup, compareFileWithGzip, sampleRollup, sampleVite } from './utils'
+import {
+  cleanup,
+  expectFileHasBeenCompressed,
+  sampleRollup,
+  sampleVite,
+} from './utils'
 
 describe('index', () => {
   beforeEach(() => cleanup())
@@ -10,60 +15,44 @@ describe('index', () => {
     ['rollup', sampleRollup],
     ['vite', sampleVite],
   ])('when using %s', (_, sampleFn) => {
-    it('without options', () => {
-      return sampleFn().then(expectedFileName =>
-        compareFileWithGzip('test/__output/' + expectedFileName),
-      )
+    it('without options', async () => {
+      const expectedFileName = await sampleFn()
+      await expectFileHasBeenCompressed('test/__output/' + expectedFileName)
     })
 
-    it('with fileName string option', () => {
-      return sampleFn({
+    it('with fileName string option', async () => {
+      const expectedFileName = await sampleFn({
         fileName: '.gzzz',
-      }).then(expectedFileName =>
-        compareFileWithGzip('test/__output/' + expectedFileName, '.gzzz'),
+      })
+      await expectFileHasBeenCompressed(
+        'test/__output/' + expectedFileName,
+        '.gzzz',
       )
     })
 
-    it('with fileName function option', () => {
-      return sampleFn({
+    it('with fileName function option', async () => {
+      const expectedFileName = await sampleFn({
         fileName: name => name + '.gzzz',
-      }).then(expectedFileName =>
-        compareFileWithGzip('test/__output/' + expectedFileName, '.gzzz'),
+      })
+      await expectFileHasBeenCompressed(
+        'test/__output/' + expectedFileName,
+        '.gzzz',
       )
     })
 
-    it('with customCompression option', () => {
-      return sampleFn({
+    it('with customCompression option', async () => {
+      const expectedFileName = await sampleFn({
         customCompression: content => content.toString() + 'XXX',
-      }).then(
-        expectedFileName =>
-          new Promise<void>((resolve, reject) => {
-            fs.readFile(
-              'test/__output/' + expectedFileName,
-              (err, bundleContent) => {
-                if (err) {
-                  reject('Bundle not found!')
-                  return
-                }
-
-                fs.readFile(
-                  'test/__output/' + expectedFileName + '.gz',
-                  (err2, compressedContent) => {
-                    if (err2) {
-                      reject('Gzip file not found!')
-                      return
-                    }
-
-                    expect(compressedContent.toString()).toEqual(
-                      bundleContent.toString() + 'XXX',
-                    )
-                    resolve()
-                  },
-                )
-              },
-            )
-          }),
+      })
+      const bundle = await fs.readFile(
+        'test/__output/' + expectedFileName,
+        'utf8',
       )
+      const compressed = await fs.readFile(
+        'test/__output/' + expectedFileName + '.gz',
+        'utf8',
+      )
+      expect(compressed).toBe(bundle + 'XXX')
     })
   })
 })
