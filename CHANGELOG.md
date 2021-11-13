@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.5.1 (2021-11-13)
+
+-   Fail build when detecting incompatible Vite bundle
+
 ## v2.5.0 (2020-05-06)
 
 -   Compress HTML files by default ([@dilyanpalauzov](https://github.com/dilyanpalauzov) in [#14](https://github.com/kryops/rollup-plugin-gzip/pull/14))

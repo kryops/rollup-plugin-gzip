@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-gzip",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Compress your Rollup bundle with Gzip",
   "keywords": [
     "rollup",
@@ -54,7 +54,8 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.58.0",
     "ts-jest": "^27.0.7",
-    "typescript": "^4.4.4"
+    "typescript": "^4.4.4",
+    "vite": "^2.6.14"
   },
   "peerDependencies": {
     "rollup": ">=0.60.0"

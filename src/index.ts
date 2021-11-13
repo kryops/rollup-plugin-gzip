@@ -210,6 +210,17 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
                             outputOptions,
                         )
 
+                        // Vite incompatibility check
+                        if (
+                            fileName.endsWith('.js') &&
+                            fileContent.toString().includes('__VITE_PRELOAD__')
+                        ) {
+                            return Promise.reject(
+                                '[rollup-plugin-gzip] This version of rollup-plugin-gzip is not fully compatible with Vite.' +
+                                    ' Please upgrade to version 3.x',
+                            )
+                        }
+
                         // minSize option check
                         if (
                             options.minSize &&
