@@ -2,9 +2,12 @@
 
 ![ci status](https://github.com/kryops/rollup-plugin-gzip/workflows/CI/badge.svg)
 
-Creates a compressed `.gz` artifact for your Rollup bundle.
+Creates a compressed `.gz` / `.br` artifact for your Rollup / Vite bundle.
 
-**COMPATIBILITY NOTE**: Version 2.x is compatible with rollup 0.60 and above! For older versions of rollup, use version 1.x of this plugin.
+**COMPATIBILITY NOTE**: This version is compatible with rollup >= 2.0.0
+
+* For rollup >= 0.60 - 1.x, use version 2.x of this plugin
+* For older versions of rollup, use version 1.x of this plugin
 
 ## Installation
 

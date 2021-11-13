@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+**BREAKING CHANGES**
+
+-   Drop support for rollup version < 2.0.0
+
+New features
+
+-   Vite compatibility ([#18](https://github.com/kryops/rollup-plugin-gzip/issues/18))
+
 ## v2.5.0 (2020-05-06)
 
 -   Compress HTML files by default ([@dilyanpalauzov](https://github.com/dilyanpalauzov) in [#14](https://github.com/kryops/rollup-plugin-gzip/pull/14))

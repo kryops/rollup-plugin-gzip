@@ -1,5 +1,5 @@
 import { readFile, writeFile } from 'fs'
-import { basename } from 'path'
+import { basename, dirname, join } from 'path'
 import { promisify } from 'util'
 import { gzip, ZlibOptions } from 'zlib'
 
@@ -109,9 +109,6 @@ function getOutputFileContent(
         }
         return source
     } else {
-        if (VERSION < '1.0.0') {
-            return outputFile as any
-        }
         return typeof outputFile.source === 'string'
             ? outputFile.source
             : // just to be sure, as it is typed string | Uint8Array in rollup 2.0.0
@@ -122,12 +119,12 @@ function getOutputFileContent(
 // actual plugin code
 
 function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
-    if (VERSION < '0.60.0') {
+    if (VERSION < '2.0.0') {
         console.error(
-            '[rollup-plugin-gzip] This plugin supports rollup version >0.60.0!',
+            '[rollup-plugin-gzip] This plugin supports rollup version >= 2.0.0!',
         )
         console.error(
-            'For older rollup versions, please use version 1.x of this plugin.',
+            'For older rollup versions, please use an older version of this plugin.',
         )
     }
 
@@ -175,8 +172,10 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
     const plugin: Plugin = {
         name: 'gzip',
 
-        generateBundle(outputOptions, bundle, isWrite) {
-            if (!isWrite) return
+        writeBundle(outputOptions, bundle) {
+            const outputDir = outputOptions.file
+                ? dirname(outputOptions.file)
+                : outputOptions.dir || ''
 
             return Promise.all(
                 Object.keys(bundle)
@@ -221,18 +220,10 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
                         return Promise.resolve(doCompress(fileContent))
                             .then(compressedContent => {
                                 const compressedFileName = mapFileName(fileName)
-                                if (VERSION < '1.0.0') {
-                                    bundle[compressedFileName] =
-                                        compressedContent as any
-                                } else {
-                                    bundle[compressedFileName] = {
-                                        type: 'asset', // Rollup >= 1.21
-                                        name: compressedFileName,
-                                        fileName: compressedFileName,
-                                        isAsset: true, // Rollup < 1.21
-                                        source: compressedContent,
-                                    }
-                                }
+                                return writeFilePromise(
+                                    join(outputDir, compressedFileName),
+                                    compressedContent,
+                                )
                             })
                             .catch((err: any) => {
                                 console.error(err)
@@ -275,10 +266,9 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
                                 ) as Promise<any>
 
                             // additional files can be processed outside of rollup after a delay
-                            // for older plugins or plugins that write to disk (curcumventing rollup) without awaiting
+                            // for older plugins or plugins that write to disk (circumventing rollup) without awaiting
                             const additionalFilesDelay =
-                                options.additionalFilesDelay ||
-                                (VERSION >= '2.0.0' ? 0 : 2000)
+                                options.additionalFilesDelay || 0
 
                             if (additionalFilesDelay) {
                                 setTimeout(
@@ -293,6 +283,12 @@ function gzipPlugin(options: GzipPluginOptions = {}): Plugin {
                     ]),
             ) as Promise<any>
         },
+
+        // vite options
+        ...({
+            apply: 'build',
+            enforce: 'post',
+        } as any),
     }
 
     return plugin

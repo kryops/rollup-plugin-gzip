@@ -2,7 +2,10 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
-        "lib": ["es5", "es2015"],
+        "lib": [
+            "es5",
+            "es2015"
+        ],
         "declaration": true,
         "sourceMap": false,
         "outDir": "./dist",
@@ -12,8 +15,9 @@
         "noUnusedLocals": false,
         "noImplicitReturns": true,
         "noUnusedParameters": false,
-
         "moduleResolution": "node"
     },
-    "include": ["./src"]
+    "include": [
+        "./src"
+    ]
 }

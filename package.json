@@ -1,12 +1,16 @@
 {
   "name": "rollup-plugin-gzip",
   "version": "2.5.0",
-  "description": "Compress your Rollup bundle with Gzip",
+  "description": "Compress your Rollup / Vite bundle with Gzip or Brotli",
   "keywords": [
     "rollup",
     "rollup-plugin",
     "gzip",
-    "compress"
+    "compress",
+    "compression",
+    "brotli",
+    "vite",
+    "vite-plugin"
   ],
   "type": "commonjs",
   "main": "./dist/index.js",
@@ -39,24 +43,25 @@
   "homepage": "https://github.com/kryops/rollup-plugin-gzip#readme",
   "devDependencies": {
     "@types/jest": "^27.0.2",
-    "@types/node": "^16.11.4",
+    "@types/node": "^16.11.7",
     "@types/rimraf": "^3.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.1.0",
-    "@typescript-eslint/parser": "^5.1.0",
-    "eslint": "^8.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "eslint": "^8.2.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-jest": "^25.2.2",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.2.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.3.1",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.58.0",
+    "rollup": "^2.60.0",
     "ts-jest": "^27.0.7",
-    "typescript": "^4.4.4"
+    "typescript": "^4.4.4",
+    "vite": "^2.6.14"
   },
   "peerDependencies": {
-    "rollup": ">=0.60.0"
+    "rollup": ">=2.0.0"
   }
 }
