@@ -6,8 +6,8 @@ Creates a compressed `.gz` / `.br` artifact for your Rollup / Vite bundle.
 
 **COMPATIBILITY NOTE**: This version is compatible with rollup >= 2.0.0
 
-* For rollup >= 0.60 - 1.x, use version 2.x of this plugin
-* For older versions of rollup, use version 1.x of this plugin
+- For rollup >= 0.60 - 1.x, use version 2.x of this plugin
+- For older versions of rollup, use version 1.x of this plugin
 
 ## Installation
 
@@ -22,8 +22,8 @@ import { rollup } from 'rollup'
 import gzipPlugin from 'rollup-plugin-gzip'
 
 rollup({
-    input: 'src/index.js',
-    plugins: [gzipPlugin()],
+  input: 'src/index.js',
+  plugins: [gzipPlugin()],
 }).then(/* ... */)
 ```
 
@@ -79,14 +79,13 @@ import { rollup } from 'rollup'
 import gzipPlugin from 'rollup-plugin-gzip'
 
 rollup({
-    input: 'src/index.js',
-    plugins: [
-        gzipPlugin({
-            customCompression: content =>
-                brotliCompressSync(Buffer.from(content)),
-            fileName: '.br',
-        }),
-    ],
+  input: 'src/index.js',
+  plugins: [
+    gzipPlugin({
+      customCompression: content => brotliCompressSync(Buffer.from(content)),
+      fileName: '.br',
+    }),
+  ],
 }).then(/* ... */)
 ```
 
@@ -98,13 +97,13 @@ import { rollup } from 'rollup'
 import gzipPlugin from 'rollup-plugin-gzip'
 
 rollup({
-    input: 'src/index.js',
-    plugins: [
-        gzipPlugin({
-            customCompression: content => compress(Buffer.from(content)),
-            fileName: '.br',
-        }),
-    ],
+  input: 'src/index.js',
+  plugins: [
+    gzipPlugin({
+      customCompression: content => compress(Buffer.from(content)),
+      fileName: '.br',
+    }),
+  ],
 }).then(/* ... */)
 ```
 
@@ -112,7 +111,7 @@ rollup({
 
 Zopfli support is available through several different external packages, each of which comes with advantages and disadvantages:
 
--   [`node-zopfli`](https://www.npmjs.com/package/node-zopfli) (or [`node-zopfli-es`](https://www.npmjs.com/package/node-zopfli-es)) - native version, longer installation time, might require build tooling
+- [`node-zopfli`](https://www.npmjs.com/package/node-zopfli) (or [`node-zopfli-es`](https://www.npmjs.com/package/node-zopfli-es)) - native version, longer installation time, might require build tooling
 
 ```ts
 import { gzipSync } from 'node-zopfli'
@@ -120,16 +119,16 @@ import { rollup } from 'rollup'
 import gzipPlugin from 'rollup-plugin-gzip'
 
 rollup({
-    input: 'src/index.js',
-    plugins: [
-        gzipPlugin({
-            customCompression: content => gzipSync(Buffer.from(content)),
-        }),
-    ],
+  input: 'src/index.js',
+  plugins: [
+    gzipPlugin({
+      customCompression: content => gzipSync(Buffer.from(content)),
+    }),
+  ],
 }).then(/* ... */)
 ```
 
--   [`@gfx/zopfli`](https://www.npmjs.com/package/@gfx/zopfli) - WebAssembly version, faster installation, slower compression
+- [`@gfx/zopfli`](https://www.npmjs.com/package/@gfx/zopfli) - WebAssembly version, faster installation, slower compression
 
 ```ts
 import { gzipAsync } from '@gfx/zopfli'
@@ -137,13 +136,13 @@ import { rollup } from 'rollup'
 import gzipPlugin from 'rollup-plugin-gzip'
 
 rollup({
-    input: 'src/index.js',
-    plugins: [
-        gzipPlugin({
-            customCompression: content =>
-                gzipAsync(Buffer.from(content), { numiterations: 15 }),
-        }),
-    ],
+  input: 'src/index.js',
+  plugins: [
+    gzipPlugin({
+      customCompression: content =>
+        gzipAsync(Buffer.from(content), { numiterations: 15 }),
+    }),
+  ],
 }).then(/* ... */)
 ```
 
@@ -157,17 +156,16 @@ import { rollup } from 'rollup'
 import gzipPlugin from 'rollup-plugin-gzip'
 
 rollup({
-    input: 'src/index.js',
-    plugins: [
-        // GZIP compression as .gz files
-        gzipPlugin(),
-        // Brotil compression as .br files
-        gzipPlugin({
-            customCompression: content =>
-                brotliCompressSync(Buffer.from(content)),
-            fileName: '.br',
-        }),
-    ],
+  input: 'src/index.js',
+  plugins: [
+    // GZIP compression as .gz files
+    gzipPlugin(),
+    // Brotil compression as .br files
+    gzipPlugin({
+      customCompression: content => brotliCompressSync(Buffer.from(content)),
+      fileName: '.br',
+    }),
+  ],
 }).then(/* ... */)
 ```
 

@@ -26,7 +26,7 @@
     "clean": "rimraf dist dist-es",
     "docker-node10": "rm -rf node_modules && docker run --rm --user $(id -u):$(id -g) -w='/app' --mount type=bind,source=$(pwd),target=/app node:10-alpine yarn && rm -rf node_modules && yarn",
     "examples": "npm pack && yarn --cwd examples",
-    "format": "prettier --write --config .prettierrc './src/**' './test/**' './examples/**'",
+    "format": "prettier --write --config .prettierrc '*.js', './src/**' './test/**' './examples/**'",
     "lint": "eslint --ext .js,.ts  .",
     "test": "jest --runInBand",
     "prepare": "npm run clean && npm run build && npm run lint && npm run test"

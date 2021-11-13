@@ -1,8 +1,13 @@
 {
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-    },
-    "editor.formatOnSave": true,
-    "eslint.validate": ["typescript", "typescriptreact", "javascript"],
-    "typescript.tsdk": "node_modules/typescript/lib"
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "json.format.enable": false,
+  "eslint.validate": ["typescript", "typescriptreact", "javascript"],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
