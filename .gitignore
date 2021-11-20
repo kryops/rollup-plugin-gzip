@@ -14,3 +14,12 @@ dist/
 dist-es/
 test/__output
 *.tgz
+
+# yarn 3
+.pnp.*
+**/.yarn/*
+!**/.yarn/patches
+!**/.yarn/plugins
+!**/.yarn/releases
+!**/.yarn/sdks
+!**/.yarn/versions

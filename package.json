@@ -28,11 +28,11 @@
     "build": "tsc && tsc --project tsconfig-es.json && node rename-dist-es.js",
     "clean": "rimraf dist dist-es",
     "docker-node10": "rm -rf node_modules && docker run --rm --user $(id -u):$(id -g) -w='/app' --mount type=bind,source=$(pwd),target=/app node:10-alpine yarn && rm -rf node_modules && yarn",
-    "examples": "npm pack && yarn --cwd examples",
     "format": "prettier --write --config .prettierrc '*.js', './src/**' './test/**' './examples/**'",
     "lint": "eslint --ext .js,.ts  .",
     "test": "jest --runInBand",
-    "prepare": "npm run clean && npm run build && npm run lint && npm run test"
+    "prepack": "yarn run clean && yarn run build",
+    "prepublish": "yarn run lint && yarn run test"
   },
   "repository": {
     "type": "git",
@@ -66,5 +66,6 @@
   },
   "peerDependencies": {
     "rollup": ">=2.0.0"
-  }
+  },
+  "packageManager": "yarn@3.1.0"
 }
