@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.1 (2022-04-02)
+
+- Compress `.cjs` and `.wasm` files by default [#19](https://github.com/kryops/rollup-plugin-gzip/issues/19))
+
 ## v3.0.0 (2021-11-13)
 
 **BREAKING CHANGES**
