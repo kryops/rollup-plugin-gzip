@@ -158,7 +158,7 @@ function gzipPlugin(explicitOptions: GzipPluginOptions = {}): Plugin {
 
   const options: Required<GzipPluginOptions> = {
     // default options
-    filter: /\.(js|mjs|json|css|html)$/,
+    filter: /\.(js|mjs|cjs|json|css|html|wasm)$/,
     fileName: '.gz',
     customCompression: (fileContent: string | Buffer) =>
       gzipPromise(fileContent, options.gzipOptions),
