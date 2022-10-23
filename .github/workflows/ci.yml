@@ -18,3 +18,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - uses: bahmutov/npm-install@v1
+      - run: yarn prepack
+      - run: yarn prepublish
