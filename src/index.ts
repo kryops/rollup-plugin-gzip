@@ -106,7 +106,11 @@ function getOutputFileContent(
           : `${basename(outputFileName)}.map`
 
       // https://github.com/rollup/rollup/blob/master/src/utils/sourceMappingURL.ts#L1
-      source += `//# source` + `MappingURL=${url}\n`
+      const sourceMapComment = `//# source` + `MappingURL=${url}\n`
+      // Rollup >= 3.0.0 already includes the comment, older versions do not
+      if (!source.includes(sourceMapComment)) {
+        source += sourceMapComment
+      }
     }
     return source
   } else {

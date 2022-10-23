@@ -10,7 +10,7 @@ import { cleanup, expectCompressedChunks } from './utils'
 async function sampleSplittingVite(options: GzipPluginOptions) {
   const result = await vite.build({
     root: join(__dirname, './sample-splitting'),
-    plugins: [gzip(options)],
+    plugins: [gzip(options) as any],
     build: {
       outDir: join(__dirname, './__output'),
       sourcemap: true,

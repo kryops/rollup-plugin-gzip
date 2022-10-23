@@ -48,7 +48,7 @@ export async function sampleVite(
 ) {
   const result = await vite.build({
     root: join(__dirname, './sample'),
-    plugins: [...plugins, gzip(options)],
+    plugins: [...plugins, gzip(options)] as any, // Vite's types seems to be incompatible with Rollup 3's ones
     build: {
       outDir: join(__dirname, './__output'),
       sourcemap: true,
