@@ -2,14 +2,15 @@
   "name": "roolup-plugin-gzip-examples",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "license": "MIT",
   "private": true,
   "scripts": {
     "clean": "rimraf dist",
-    "basic": "rollup -c basic.config.mjs",
-    "additionalFiles": "rollup -c additional-files.config.mjs",
-    "brotli-zopfli": "rollup -c brotli-zopfli.config.mjs",
-    "esm": "rollup -c esm.config.mjs",
+    "basic": "rollup -c basic.config.js",
+    "additionalFiles": "rollup -c additional-files.config.js",
+    "brotli-zopfli": "rollup -c brotli-zopfli.config.js",
+    "esm": "rollup -c esm.config.js",
     "prepare": "run-s clean basic clean additionalFiles clean brotli-zopfli esm"
   },
   "dependencies": {
