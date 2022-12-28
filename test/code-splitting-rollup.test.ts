@@ -1,7 +1,6 @@
 import * as rollup from 'rollup'
 
-import gzip from '../dist/index'
-import { GzipPluginOptions } from '../src/index'
+import gzip, { GzipPluginOptions } from '../src/index'
 
 import { cleanup, expectCompressedChunks } from './utils'
 

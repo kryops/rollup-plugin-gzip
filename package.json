@@ -27,10 +27,9 @@
   "scripts": {
     "build": "tsc && tsc --project tsconfig-es.json && node rename-dist-es.js",
     "clean": "rimraf dist dist-es",
-    "docker-node10": "rm -rf node_modules && docker run --rm --user $(id -u):$(id -g) -w='/app' --mount type=bind,source=$(pwd),target=/app node:10-alpine yarn && rm -rf node_modules && yarn",
     "format": "prettier --write --config .prettierrc '*.js', './src/**' './test/**' './examples/**'",
     "lint": "eslint --ext .js,.ts  .",
-    "test": "jest --runInBand",
+    "test": "vitest run",
     "prepack": "yarn run clean && yarn run build",
     "prepublish": "yarn run lint && yarn run test"
   },
@@ -45,7 +44,6 @@
   },
   "homepage": "https://github.com/kryops/rollup-plugin-gzip#readme",
   "devDependencies": {
-    "@types/jest": "^29.2.4",
     "@types/node": "^18.11.18",
     "@types/rimraf": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
@@ -56,13 +54,12 @@
     "eslint-plugin-jest": "^27.1.7",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "jest": "^29.3.1",
     "prettier": "^2.8.1",
     "rimraf": "^3.0.2",
     "rollup": "^3.9.0",
-    "ts-jest": "^29.0.3",
     "typescript": "^4.9.4",
-    "vite": "^2.9.15"
+    "vite": "^4.0.3",
+    "vitest": "^0.26.2"
   },
   "peerDependencies": {
     "rollup": ">=2.0.0"

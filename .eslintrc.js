@@ -16,6 +16,14 @@ module.exports = {
       jsx: true,
     },
   },
+  settings: {
+    jest: {
+      // We use Vitest for testing now, but still use eslint-plugin-jest
+      // as it is more mature and largely compatible.
+      // As we don't have Jest installed any more, we need to set a fake version.
+      version: 29,
+    },
+  },
   rules: {
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/camelcase': 'off',

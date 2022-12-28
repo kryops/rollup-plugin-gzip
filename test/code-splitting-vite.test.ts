@@ -2,8 +2,7 @@ import { join } from 'path'
 
 import * as vite from 'vite'
 
-import gzip from '../dist/index'
-import { GzipPluginOptions } from '../src/index'
+import gzip, { GzipPluginOptions } from '../src/index'
 
 import { cleanup, expectCompressedChunks } from './utils'
 

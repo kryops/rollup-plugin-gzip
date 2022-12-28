@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "es2018", // Node 10
     "module": "commonjs",
-    "lib": ["es2018"],
+    "lib": [
+      "es2018",
+      // Needed for the Vitest types
+      "dom"
+    ],
     "declaration": true,
     "sourceMap": false,
     "outDir": "./dist",
@@ -12,7 +16,8 @@
     "noUnusedLocals": false,
     "noImplicitReturns": true,
     "noUnusedParameters": false,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "types": ["node", "vitest/globals"]
   },
   "include": ["./src"]
 }

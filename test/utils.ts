@@ -8,8 +8,7 @@ import * as rimraf from 'rimraf'
 import * as rollup from 'rollup'
 import * as vite from 'vite'
 
-import gzip from '../dist/index'
-import { GzipPluginOptions } from '../src/index'
+import gzip, { GzipPluginOptions } from '../src/index'
 
 // Unit tests do not run on Node 10 anyway
 // eslint-disable-next-line node/no-unsupported-features/node-builtins
@@ -19,7 +18,8 @@ const gunzipPromise = promisify(zlib.gunzip)
 
 export async function cleanup() {
   await new Promise<void>(resolve => {
-    rimraf('test/__output/**', () => resolve())
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('rimraf')('test/__output/**', () => resolve())
   })
   await mkdir('test/__output', { recursive: true })
 }
