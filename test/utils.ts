@@ -4,7 +4,7 @@ import { dirname } from 'path'
 import * as zlib from 'zlib'
 import { promisify } from 'util'
 
-import * as rimraf from 'rimraf'
+import { rimraf } from 'rimraf'
 import * as rollup from 'rollup'
 import * as vite from 'vite'
 
@@ -17,10 +17,7 @@ const { mkdir, readdir, readFile, stat, writeFile } = fs.promises
 const gunzipPromise = promisify(zlib.gunzip)
 
 export async function cleanup() {
-  await new Promise<void>(resolve => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require('rimraf')('test/__output/**', () => resolve())
-  })
+  await rimraf('test/__output')
   await mkdir('test/__output', { recursive: true })
 }
 
