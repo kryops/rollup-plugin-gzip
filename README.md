@@ -35,7 +35,7 @@ rollup({
 
 Control which of the output files to compress.
 
-Defaults to `/\.(js|mjs|cjs|json|css|html|wasm)$/`
+Defaults to `/\.(js|mjs|cjs|json|css|html|wasm|svg)$/`
 
 **gzipOptions** `object`
 

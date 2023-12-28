@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.1.1 (2023-12-28)
+
+- Compress `.svg` files by default [#20](https://github.com/kryops/rollup-plugin-gzip/pull/20))
+
 ## v3.1.0 (2022-10-23)
 
 - Add support for Rollup 3
