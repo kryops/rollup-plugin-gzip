@@ -17,7 +17,10 @@
     "noImplicitReturns": true,
     "noUnusedParameters": false,
     "moduleResolution": "node",
-    "types": ["node", "vitest/globals"]
+    "types": ["node", "vitest/globals"],
+    // The Vite 5 types only work with with moduleResolution node16,
+    // but that does not work with module commonjs
+    "skipLibCheck": true
   },
   "include": ["./src"]
 }
