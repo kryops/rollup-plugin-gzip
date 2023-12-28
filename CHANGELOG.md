@@ -2,7 +2,7 @@
 
 ## v3.1.1 (2023-12-28)
 
-- Compress `.svg` files by default [#20](https://github.com/kryops/rollup-plugin-gzip/pull/20))
+- Compress `.svg` files by default ([#20](https://github.com/kryops/rollup-plugin-gzip/pull/20))
 
 ## v3.1.0 (2022-10-23)
 
@@ -10,7 +10,7 @@
 
 ## v3.0.1 (2022-04-02)
 
-- Compress `.cjs` and `.wasm` files by default [#19](https://github.com/kryops/rollup-plugin-gzip/issues/19))
+- Compress `.cjs` and `.wasm` files by default ([#19](https://github.com/kryops/rollup-plugin-gzip/issues/19))
 
 ## v3.0.0 (2021-11-13)
 
