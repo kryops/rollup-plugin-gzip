@@ -37,7 +37,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/kryops/rollup-plugin-gzip.git"
   },
-  "author": "Michael Strobel <michael@kryops.de>",
+  "author": "Michael Manzinger <michael@kryops.de>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/kryops/rollup-plugin-gzip/issues"
