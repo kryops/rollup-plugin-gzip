@@ -6,7 +6,6 @@ module.exports = {
     'prettier',
     'plugin:node/recommended-module',
     'plugin:import/typescript',
-    'plugin:prettier/recommended',
     'plugin:jest/recommended',
   ],
   parserOptions: {
@@ -45,7 +44,6 @@ module.exports = {
     'jest/expect-expect': 'off',
     'node/no-missing-import': 'off',
     'node/no-unsupported-features/es-syntax': 'off',
-    'prettier/prettier': 'warn',
   },
   overrides: [
     {
