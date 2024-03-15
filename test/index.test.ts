@@ -55,5 +55,13 @@ describe('index', () => {
       )
       expect(compressed).toBe(bundle + 'XXX')
     })
+
+    it.each([undefined, true, false, 'inline', 'hidden'] as const)(
+      'with sourcemap: %p',
+      async sourcemap => {
+        const expectedFileName = await sampleFn({}, [], sourcemap)
+        await expectFileHasBeenCompressed('test/__output/' + expectedFileName)
+      },
+    )
   })
 })

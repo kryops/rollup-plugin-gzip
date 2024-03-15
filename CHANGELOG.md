@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.1.2 (2024-03-15)
+
+- Fix support for `sourcemap: 'hidden'` ([#21](https://github.com/kryops/rollup-plugin-gzip/issues/21))
+
 ## v3.1.1 (2023-12-28)
 
 - Compress `.svg` files by default ([#20](https://github.com/kryops/rollup-plugin-gzip/pull/20))

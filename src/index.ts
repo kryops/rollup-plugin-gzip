@@ -99,7 +99,11 @@ function getOutputFileContent(
   if (isOutputChunk(outputFile)) {
     let source: string | Buffer
     source = outputFile.code
-    if (outputOptions.sourcemap && outputFile.map) {
+    if (
+      (outputOptions.sourcemap === true ||
+        outputOptions.sourcemap === 'inline') &&
+      outputFile.map
+    ) {
       const url =
         outputOptions.sourcemap === 'inline'
           ? outputFile.map.toUrl()
