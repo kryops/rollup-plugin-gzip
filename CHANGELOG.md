@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+**MAYBE BREAKING CHANGES**
+
+- Switch to `type: "module"` ([#22](https://github.com/kryops/rollup-plugin-gzip/issues/22))
+
 ## v3.1.2 (2024-03-15)
 
 - Fix support for `sourcemap: 'hidden'` ([#21](https://github.com/kryops/rollup-plugin-gzip/issues/21))

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2018", // Node 10
-    "module": "commonjs",
+    "module": "Node16",
     "lib": [
       "es2018",
       // Needed for the Vitest types
@@ -16,11 +16,8 @@
     "noUnusedLocals": false,
     "noImplicitReturns": true,
     "noUnusedParameters": false,
-    "moduleResolution": "node",
-    "types": ["node", "vitest/globals"],
-    // The Vite 5 types only work with with moduleResolution node16,
-    // but that does not work with module commonjs
-    "skipLibCheck": true
+    "moduleResolution": "Node16",
+    "types": ["node", "vitest/globals"]
   },
   "include": ["./src"]
 }

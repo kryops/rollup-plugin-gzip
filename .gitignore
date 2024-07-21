@@ -11,7 +11,6 @@ yarn-error.log
 
 lib/
 dist/
-dist-es/
 test/__output
 *.tgz
 

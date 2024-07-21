@@ -7,7 +7,7 @@ import {
   writeFiles,
   sampleRollup,
   sampleVite,
-} from './utils'
+} from './utils.js'
 
 describe('additionalFiles', () => {
   beforeEach(() => cleanup())

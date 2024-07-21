@@ -5,7 +5,7 @@ import {
   expectFileHasBeenCompressed,
   sampleRollup,
   sampleVite,
-} from './utils'
+} from './utils.js'
 
 // Unit tests do not run on Node 10 anyway
 // eslint-disable-next-line node/no-unsupported-features/node-builtins

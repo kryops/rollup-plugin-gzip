@@ -1,7 +1,6 @@
 package.json
 yarn.lock
 dist
-dist-es
 test/__output
 .yarn
 examples/.yarn

@@ -2,9 +2,9 @@ import { join } from 'path'
 
 import * as vite from 'vite'
 
-import gzip, { GzipPluginOptions } from '../src/index'
+import gzip, { GzipPluginOptions } from '../src/index.js'
 
-import { cleanup, expectCompressedChunks } from './utils'
+import { cleanup, expectCompressedChunks } from './utils.js'
 
 async function sampleSplittingVite(options: GzipPluginOptions) {
   const result = await vite.build({

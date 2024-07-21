@@ -15,18 +15,18 @@
     "vite",
     "vite-plugin"
   ],
-  "type": "commonjs",
-  "main": "./dist/index.js",
-  "module": "./dist-es/index.mjs",
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/index.mjs",
   "exports": {
-    "require": "./dist/index.js",
-    "import": "./dist-es/index.mjs",
+    "require": "./dist/cjs/index.cjs",
+    "import": "./dist/index.js",
     "default": "./dist/index.js"
   },
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc && tsc --project tsconfig-es.json && node rename-dist-es.js",
-    "clean": "rimraf dist dist-es",
+    "build": "tsc && tsc --project tsconfig-cjs.json && node rename-dist-cjs.js",
+    "clean": "rimraf dist",
     "format": "prettier --write --config .prettierrc '*.js', './src/**' './test/**' './examples/**'",
     "lint": "eslint --ext .js,.ts  .",
     "test": "vitest run",

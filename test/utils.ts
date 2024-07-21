@@ -8,7 +8,7 @@ import { rimraf } from 'rimraf'
 import * as rollup from 'rollup'
 import * as vite from 'vite'
 
-import gzip, { GzipPluginOptions } from '../src/index'
+import gzip, { GzipPluginOptions } from '../src/index.js'
 
 // Unit tests do not run on Node 10 anyway
 // eslint-disable-next-line node/no-unsupported-features/node-builtins

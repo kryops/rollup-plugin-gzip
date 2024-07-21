@@ -1,8 +1,8 @@
 import * as rollup from 'rollup'
 
-import gzip, { GzipPluginOptions } from '../src/index'
+import gzip, { GzipPluginOptions } from '../src/index.js'
 
-import { cleanup, expectCompressedChunks } from './utils'
+import { cleanup, expectCompressedChunks } from './utils.js'
 
 async function sampleSplittingRollup(options: GzipPluginOptions) {
   const inputOptions = {

@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 
-import gzip from './dist-es/index'
+import gzip from './dist/index.js'
 
 export default defineConfig({
   root: 'test/sample',
