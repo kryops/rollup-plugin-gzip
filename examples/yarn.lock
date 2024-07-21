@@ -1646,12 +1646,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-gzip@file:../rollup-plugin-gzip-3.1.1.tgz::locator=roolup-plugin-gzip-examples%40workspace%3A.":
-  version: 3.1.1
-  resolution: "rollup-plugin-gzip@file:../rollup-plugin-gzip-3.1.1.tgz#../rollup-plugin-gzip-3.1.1.tgz::hash=2a1447&locator=roolup-plugin-gzip-examples%40workspace%3A."
+"rollup-plugin-gzip@file:../rollup-plugin-gzip-4.0.0.tgz::locator=roolup-plugin-gzip-examples%40workspace%3A.":
+  version: 4.0.0
+  resolution: "rollup-plugin-gzip@file:../rollup-plugin-gzip-4.0.0.tgz#../rollup-plugin-gzip-4.0.0.tgz::hash=d13fb6&locator=roolup-plugin-gzip-examples%40workspace%3A."
   peerDependencies:
     rollup: ">=2.0.0"
-  checksum: 10/3cf116810df9610f68a553da36eb0143c39a0f584a9852756d9b3054d4a35558e1bdf25297d082d187ad88eb585849e23c15fb0c18393f22d4b40e875c977a0c
+  checksum: 10/370e1c59b86b1997fd03124982e7d91defb8b26d35d19daa2c30086e1a96f158f9def69b4b2764ab481829034c12d8e34bd810d3aa38b8e9c40b4e4c15fc988e
   languageName: node
   linkType: hard
 
@@ -1726,7 +1726,7 @@ __metadata:
     npm-run-all: "npm:^4.1.5"
     rimraf: "npm:^6.0.1"
     rollup: "npm:^4.19.0"
-    rollup-plugin-gzip: ../rollup-plugin-gzip-3.1.1.tgz
+    rollup-plugin-gzip: ../rollup-plugin-gzip-4.0.0.tgz
   languageName: unknown
   linkType: soft
 
