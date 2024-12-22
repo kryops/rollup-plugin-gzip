@@ -1,6 +1,5 @@
 import * as fs from 'fs'
-import { join } from 'path'
-import { dirname } from 'path'
+import { join, dirname } from 'path'
 import * as zlib from 'zlib'
 import { promisify } from 'util'
 
@@ -11,7 +10,7 @@ import * as vite from 'vite'
 import gzip, { GzipPluginOptions } from '../src/index.js'
 
 // Unit tests do not run on Node 10 anyway
-// eslint-disable-next-line node/no-unsupported-features/node-builtins
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
 const { mkdir, readdir, readFile, stat, writeFile } = fs.promises
 
 const gunzipPromise = promisify(zlib.gunzip)
