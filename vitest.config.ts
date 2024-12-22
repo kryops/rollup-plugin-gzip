@@ -4,9 +4,9 @@ export default defineConfig({
   test: {
     globals: true,
     poolOptions: {
-      threads: {
-        minThreads: 1,
-        maxThreads: 1,
+      forks: {
+        minForks: 1,
+        maxForks: 1,
       },
     },
   },

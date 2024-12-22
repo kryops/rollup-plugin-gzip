@@ -44,23 +44,23 @@
   },
   "homepage": "https://github.com/kryops/rollup-plugin-gzip#readme",
   "devDependencies": {
-    "@types/node": "^20.14.11",
-    "@typescript-eslint/eslint-plugin": "^7.16.1",
-    "@typescript-eslint/parser": "^7.16.1",
+    "@types/node": "^20.17.10",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jest": "^28.6.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jest": "^28.10.0",
     "eslint-plugin-node": "^11.1.0",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
-    "rollup": "^4.19.0",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.4",
-    "vitest": "^1.4.0"
+    "rollup": "^4.29.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vitest": "^2.1.8"
   },
   "peerDependencies": {
     "rollup": ">=2.0.0"
   },
-  "packageManager": "yarn@4.3.1"
+  "packageManager": "yarn@4.5.3"
 }
