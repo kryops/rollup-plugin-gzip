@@ -9,7 +9,13 @@ import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default tseslint.config(
   {
-    ignores: ['**/node_modules', '**/dist', 'test/__output', '.yarn'],
+    ignores: [
+      '**/node_modules',
+      '**/dist',
+      'test/__output',
+      '.yarn',
+      'examples',
+    ],
   },
   {
     files: ['**/*.js', '**/*.ts'],
