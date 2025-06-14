@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.1.1 (2025-06-14)
+
+- Fix source maps for Rollup 2
+
 ## v4.1.0 (2025-06-14)
 
 - Add support for `rolldown-vite` ([#23](https://github.com/kryops/rollup-plugin-gzip/issues/23))

@@ -113,7 +113,7 @@ function getOutputFileContent(
       const sourceMapComment = `//# source` + `MappingURL=${url}\n`
       // Rollup >= 3.0.0 already includes the comment, older versions do not.
       // rolldown-vite includes it, but without the line break
-      if (!source.includes(sourceMapComment.slice(-1))) {
+      if (!source.includes(sourceMapComment.slice(0, -1))) {
         source += sourceMapComment
       }
     }
