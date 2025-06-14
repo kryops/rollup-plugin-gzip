@@ -1646,12 +1646,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-gzip@file:../rollup-plugin-gzip-4.0.0.tgz::locator=roolup-plugin-gzip-examples%40workspace%3A.":
-  version: 4.0.0
-  resolution: "rollup-plugin-gzip@file:../rollup-plugin-gzip-4.0.0.tgz#../rollup-plugin-gzip-4.0.0.tgz::hash=d13fb6&locator=roolup-plugin-gzip-examples%40workspace%3A."
+"rollup-plugin-gzip@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "rollup-plugin-gzip@npm:4.1.0"
   peerDependencies:
     rollup: ">=2.0.0"
-  checksum: 10/370e1c59b86b1997fd03124982e7d91defb8b26d35d19daa2c30086e1a96f158f9def69b4b2764ab481829034c12d8e34bd810d3aa38b8e9c40b4e4c15fc988e
+  checksum: 10/91b66498840bcced8b4b5b4f99179d02ff3000f6f472bb89559285fbe813b5b5004d7ba9ca73c6cea8481e8a969727a1c07159d767843a672759a2a13c8d3226
   languageName: node
   linkType: hard
 
@@ -1726,7 +1726,7 @@ __metadata:
     npm-run-all: "npm:^4.1.5"
     rimraf: "npm:^6.0.1"
     rollup: "npm:^4.19.0"
-    rollup-plugin-gzip: ../rollup-plugin-gzip-4.0.0.tgz
+    rollup-plugin-gzip: "npm:^4.1.0"
   languageName: unknown
   linkType: soft
 
