@@ -23,7 +23,7 @@ async function sampleSplittingRollup(options: GzipPluginOptions) {
     .map(chunk => chunk.fileName)
 }
 
-describe('code splitting', () => {
+describe('code splitting (rollup)', () => {
   beforeEach(() => cleanup())
   afterEach(() => cleanup())
 
@@ -45,9 +45,7 @@ describe('code splitting', () => {
   })
 
   it('splitting with minSize option', async () => {
-    const chunks = await sampleSplittingRollup({
-      minSize: 120,
-    })
+    const chunks = await sampleSplittingRollup({ minSize: 120 })
     await expectCompressedChunks(chunks, ['a', 'b'])
   })
 })

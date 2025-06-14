@@ -7,6 +7,7 @@ import {
   writeFiles,
   sampleRollup,
   sampleVite,
+  sampleRolldownVite,
 } from './utils.js'
 
 describe('additionalFiles', () => {
@@ -16,6 +17,7 @@ describe('additionalFiles', () => {
   describe.each([
     ['rollup', sampleRollup],
     ['vite', sampleVite],
+    ['rolldown-vite', sampleRolldownVite],
   ])('when using %s', (_, sampleFn) => {
     describe('files present before', () => {
       beforeEach(() =>

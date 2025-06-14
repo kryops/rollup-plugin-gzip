@@ -3,6 +3,7 @@ import * as fs from 'fs'
 import {
   cleanup,
   expectFileHasBeenCompressed,
+  sampleRolldownVite,
   sampleRollup,
   sampleVite,
 } from './utils.js'
@@ -18,6 +19,7 @@ describe('index', () => {
   describe.each([
     ['rollup', sampleRollup],
     ['vite', sampleVite],
+    ['rolldown-vite', sampleRolldownVite],
   ])('when using %s', (_, sampleFn) => {
     it('without options', async () => {
       const expectedFileName = await sampleFn()
@@ -25,9 +27,7 @@ describe('index', () => {
     })
 
     it('with fileName string option', async () => {
-      const expectedFileName = await sampleFn({
-        fileName: '.gzzz',
-      })
+      const expectedFileName = await sampleFn({ fileName: '.gzzz' })
       await expectFileHasBeenCompressed(
         'test/__output/' + expectedFileName,
         '.gzzz',

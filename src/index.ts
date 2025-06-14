@@ -111,8 +111,9 @@ function getOutputFileContent(
 
       // https://github.com/rollup/rollup/blob/master/src/utils/sourceMappingURL.ts#L1
       const sourceMapComment = `//# source` + `MappingURL=${url}\n`
-      // Rollup >= 3.0.0 already includes the comment, older versions do not
-      if (!source.includes(sourceMapComment)) {
+      // Rollup >= 3.0.0 already includes the comment, older versions do not.
+      // rolldown-vite includes it, but without the line break
+      if (!source.includes(sourceMapComment.slice(-1))) {
         source += sourceMapComment
       }
     }

@@ -6,6 +6,7 @@ import { promisify } from 'util'
 import { rimraf } from 'rimraf'
 import * as rollup from 'rollup'
 import * as vite from 'vite'
+import * as rolldownVite from 'rolldown-vite'
 
 import gzip, { GzipPluginOptions } from '../src/index.js'
 
@@ -43,8 +44,10 @@ export async function sampleVite(
   options?: GzipPluginOptions,
   plugins: rollup.Plugin[] = [],
   sourcemap: boolean | 'inline' | 'hidden' = true,
+  variant: 'vite' | 'rolldown-vite' = 'vite',
 ) {
-  const result = await vite.build({
+  const implementation = variant === 'vite' ? vite : rolldownVite
+  const result = await implementation.build({
     root: join(__dirname, './sample'),
     plugins: [...plugins, gzip(options)] as any, // Vite's types seems to be incompatible with Rollup 3's ones
     build: {
@@ -60,6 +63,14 @@ export async function sampleVite(
   }
 
   throw new Error('Could not find output asset')
+}
+
+export async function sampleRolldownVite(
+  options?: GzipPluginOptions,
+  plugins: rollup.Plugin[] = [],
+  sourcemap: boolean | 'inline' | 'hidden' = true,
+) {
+  return sampleVite(options, plugins, sourcemap, 'rolldown-vite')
 }
 
 export async function expectFileNotPresent(path: string) {
