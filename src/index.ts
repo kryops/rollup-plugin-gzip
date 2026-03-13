@@ -3,12 +3,11 @@ import { basename, dirname, join } from 'path'
 import { promisify } from 'util'
 import { gzip, ZlibOptions } from 'zlib'
 
-import {
+import type {
   OutputAsset,
   OutputChunk,
   OutputOptions,
   Plugin,
-  VERSION,
 } from 'rollup'
 
 const readFile = promisify(fs.readFile)
@@ -128,14 +127,19 @@ function getOutputFileContent(
 
 // actual plugin code
 
-function performInitChecks(options: GzipPluginOptions) {
-  if (VERSION < '2.0.0') {
-    console.error(
-      '[rollup-plugin-gzip] This plugin supports rollup version >= 2.0.0!',
-    )
-    console.error(
-      'For older rollup versions, please use an older version of this plugin.',
-    )
+async function performInitChecks(options: GzipPluginOptions) {
+  try {
+    const { VERSION } = await import('rollup')
+    if (VERSION < '2.0.0') {
+      console.error(
+        '[rollup-plugin-gzip] This plugin supports rollup version >= 2.0.0!',
+      )
+      console.error(
+        'For older rollup versions, please use an older version of this plugin.',
+      )
+    }
+  } catch {
+    // rollup not available (e.g. using rolldown) — skip version check
   }
 
   // check for old options
