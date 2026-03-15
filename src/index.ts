@@ -3,12 +3,7 @@ import { basename, dirname, join } from 'path'
 import { promisify } from 'util'
 import { gzip, ZlibOptions } from 'zlib'
 
-import type {
-  OutputAsset,
-  OutputChunk,
-  OutputOptions,
-  Plugin,
-} from 'rollup'
+import type { OutputAsset, OutputChunk, OutputOptions, Plugin } from 'rollup'
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)

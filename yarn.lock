@@ -3635,6 +3635,9 @@ __metadata:
     vitest: "npm:^4.0.16"
   peerDependencies:
     rollup: ">=2.0.0"
+  peerDependenciesMeta:
+    rollup:
+      optional: true
   languageName: unknown
   linkType: soft
 
