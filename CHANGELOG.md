@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.2.0 (2026-03-15)
+
+- Make `rollup` peer dependency optional ([#24](https://github.com/kryops/rollup-plugin-gzip/pull/24))
+
 ## v4.1.1 (2025-06-14)
 
 - Fix source maps for Rollup 2
