@@ -29,9 +29,7 @@
     "clean": "rimraf dist",
     "format": "prettier --write --config .prettierrc '*.js', './src/**' './test/**' './examples/**'",
     "lint": "eslint",
-    "test": "vitest run",
-    "prepack": "yarn run clean && yarn run build",
-    "prepublish": "yarn run lint && yarn run test"
+    "test": "vitest run"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,53 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write # npm trusted publishing (OIDC) + provenance
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # No dependency cache in release builds
+      # Node 26 bundles npm >= 11.16 (npm stage publish requires >= 11.15)
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Check that the release tag matches the package version
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if [ "${TAG_NAME#v}" != "$version" ]; then
+            echo "::error::Release tag $TAG_NAME does not match package version $version"
+            exit 1
+          fi
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
+
+      - run: yarn install --immutable
+      - run: yarn build
+      - run: yarn lint
+      - run: yarn test
+
+      - name: Stage publish
+        run: npm stage publish --provenance --access public --tag "$NPM_TAG"
+        env:
+          NPM_TAG: ${{ github.event.release.prerelease && 'next' || 'latest' }}
