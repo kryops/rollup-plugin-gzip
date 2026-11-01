@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v4.2.1 (2026-11-01)
 
 - Set up trusted publishing via GitHub Actions
 - Add tests for `rolldown`
