@@ -3,6 +3,7 @@ import * as fs from 'fs'
 import {
   cleanup,
   expectFileHasBeenCompressed,
+  sampleRolldown,
   sampleRolldownVite,
   sampleRollup,
   sampleVite,
@@ -19,6 +20,7 @@ describe('index', () => {
   describe.each([
     ['rollup', sampleRollup],
     ['vite', sampleVite],
+    ['rolldown', sampleRolldown],
     ['rolldown-vite', sampleRolldownVite],
   ])('when using %s', (_, sampleFn) => {
     it('without options', async () => {

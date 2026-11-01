@@ -7,6 +7,7 @@ import { rimraf } from 'rimraf'
 import * as rollup from 'rollup'
 import * as vite from 'vite'
 import * as rolldownVite from 'rolldown-vite'
+import * as rolldown from 'rolldown'
 
 import gzip, { GzipPluginOptions } from '../src/index.js'
 
@@ -29,6 +30,25 @@ export async function sampleRollup(
   const bundle = await rollup.rollup({
     input: 'test/sample/index.js',
     plugins: [...plugins, gzip(options)],
+  })
+
+  await bundle.write({
+    file: 'test/__output/bundle.js',
+    format: 'iife',
+    sourcemap,
+  })
+
+  return 'bundle.js'
+}
+
+export async function sampleRolldown(
+  options?: GzipPluginOptions,
+  plugins: rollup.Plugin[] = [],
+  sourcemap: boolean | 'inline' | 'hidden' = true,
+) {
+  const bundle = await rolldown.rolldown({
+    input: 'test/sample/index.js',
+    plugins: [...plugins, gzip(options)] as any,
   })
 
   await bundle.write({
