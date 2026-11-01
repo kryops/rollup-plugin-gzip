@@ -9,6 +9,7 @@
     ],
     "declaration": true,
     "sourceMap": false,
+    "rootDir": "./src",
     "outDir": "./dist",
     "strict": true,
     "noFallthroughCasesInSwitch": true,

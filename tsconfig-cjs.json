@@ -3,7 +3,7 @@
   "compilerOptions": {
     "target": "es2015",
     "module": "CommonJS",
-    "moduleResolution": "Node10",
+    "moduleResolution": "Bundler",
     "outDir": "./dist/cjs",
     "declaration": false,
     "skipLibCheck": true
