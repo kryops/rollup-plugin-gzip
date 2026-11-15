@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v4.2.2 (2026-11-15)
 
 - Fix duplicate `sourceMappingURL` comment when using `sourcemapBaseUrl` or `sourcemapFileNames` ([#26](https://github.com/kryops/rollup-plugin-gzip/issues/26))
 - Add `verifyContent` option to fail the build if the compressed content differs from the file written to disk
