@@ -28,7 +28,7 @@
     "build": "tsc && tsc --project tsconfig-cjs.json && node rename-dist-cjs.js",
     "clean": "rimraf dist",
     "format": "prettier --write --config .prettierrc '*.js', './src/**' './test/**' './examples/**'",
-    "lint": "eslint",
+    "lint": "eslint && tsc --project test",
     "test": "vitest run"
   },
   "repository": {

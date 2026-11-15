@@ -3,6 +3,8 @@
   "include": ["."],
   "compilerOptions": {
     "allowJs": true,
-    "declaration": false
+    "declaration": false,
+    "rootDir": "..",
+    "noEmit": true
   }
 }
