@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Fix duplicate `sourceMappingURL` comment when using `sourcemapBaseUrl` or `sourcemapFileNames` ([#26](https://github.com/kryops/rollup-plugin-gzip/issues/26))
+
 ## v4.2.1 (2026-11-01)
 
 - Set up trusted publishing via GitHub Actions

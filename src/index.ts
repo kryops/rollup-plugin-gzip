@@ -71,6 +71,9 @@ export interface GzipPluginOptions {
 
 // functionality partially copied from rollup
 
+const sourceMappingUrlRegExp = /^\/\/[#@] sourceMappingURL=/m
+const addTrailingSlash = (url: string) => (url.endsWith('/') ? url : url + '/')
+
 /**
  * copied from https://github.com/rollup/rollup/blob/master/src/rollup/index.ts#L450
  */
@@ -98,17 +101,23 @@ function getOutputFileContent(
         outputOptions.sourcemap === 'inline') &&
       outputFile.map
     ) {
-      const url =
-        outputOptions.sourcemap === 'inline'
-          ? outputFile.map.toUrl()
-          : `${basename(outputFileName)}.map`
-
-      // https://github.com/rollup/rollup/blob/master/src/utils/sourceMappingURL.ts#L1
-      const sourceMapComment = `//# source` + `MappingURL=${url}\n`
       // Rollup >= 3.0.0 already includes the comment, older versions do not.
-      // rolldown-vite includes it, but without the line break
-      if (!source.includes(sourceMapComment.slice(0, -1))) {
-        source += sourceMapComment
+      // The URL depends on options like sourcemapBaseUrl and sourcemapFileNames,
+      // so check for any existing comment instead of an exact match.
+      // rolldown-vite includes it, but without the trailing line break.
+      if (!sourceMappingUrlRegExp.test(source)) {
+        const url =
+          outputOptions.sourcemap === 'inline'
+            ? outputFile.map.toUrl()
+            : outputOptions.sourcemapBaseUrl
+              ? new URL(
+                  `${basename(outputFileName)}.map`,
+                  addTrailingSlash(outputOptions.sourcemapBaseUrl),
+                ).toString()
+              : `${basename(outputFileName)}.map`
+
+        // https://github.com/rollup/rollup/blob/master/src/utils/sourceMappingURL.ts#L1
+        source += `//# source` + `MappingURL=${url}\n`
       }
     }
     return source
