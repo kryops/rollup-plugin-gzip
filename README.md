@@ -65,6 +65,12 @@ Set a custom file name convention for the compressed files. Can be a suffix stri
 
 Defaults to `".gz"`
 
+**verifyContent** `boolean`
+
+Verify that the content that is compressed is identical to the file written to disk. If a mismatch is detected, an error is thrown and the build fails. Every compressed file is read back from disk, so this has a small performance cost.
+
+Defaults to `false`
+
 ## Examples
 
 > NOTE: These examples use Rollup's JavaScript API. For Rollup configuration file examples, check out the `/examples` directory.

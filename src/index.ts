@@ -67,6 +67,15 @@ export interface GzipPluginOptions {
    * Defaults to `.gz`
    */
   fileName?: string | StringMappingOption
+
+  /**
+   * Verify that the content that is compressed is identical to the file written to disk.
+   * If a mismatch is detected, an error is thrown and the build fails.
+   * This reads every compressed file back from disk, so it has a small performance cost.
+   *
+   * Defaults to `false`
+   */
+  verifyContent?: boolean
 }
 
 // functionality partially copied from rollup
@@ -183,6 +192,7 @@ function gzipPlugin(explicitOptions: GzipPluginOptions = {}): Plugin {
     additionalFiles: [],
     additionalFilesDelay: 0,
     minSize: 0,
+    verifyContent: false,
 
     ...explicitOptions,
   }
@@ -219,6 +229,17 @@ function gzipPlugin(explicitOptions: GzipPluginOptions = {}): Plugin {
           fileEntry,
           outputOptions,
         )
+
+        if (options.verifyContent) {
+          // outside of the try/catch below, which would swallow this error's message and stack
+          const onDisk = await readFile(join(outputDir, fileName))
+          if (!Buffer.from(fileContent).equals(onDisk)) {
+            throw new Error(
+              `[rollup-plugin-gzip] Content verification failed for ${fileName}: ` +
+                'the content to compress differs from the file written to disk.',
+            )
+          }
+        }
 
         // minSize option check
         if (options.minSize && options.minSize > fileContent.length) {
