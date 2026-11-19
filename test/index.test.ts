@@ -58,6 +58,24 @@ describe('index', () => {
       expect(compressed).toBe(bundle + 'XXX')
     })
 
+    it('with explicitly undefined options', async () => {
+      const expectedFileName = await sampleFn({
+        filter: undefined,
+        gzipOptions: undefined,
+        minSize: undefined,
+        additionalFiles: undefined,
+        additionalFilesDelay: undefined,
+        customCompression: undefined,
+        fileName: undefined,
+        verifyContent: undefined,
+      })
+      await expectFileHasBeenCompressed('test/__output/' + expectedFileName)
+      // default filter must still apply, so source maps are not compressed
+      expect(fs.existsSync(`test/__output/${expectedFileName}.map.gz`)).toBe(
+        false,
+      )
+    })
+
     it.each([undefined, true, false, 'inline', 'hidden'] as const)(
       'with sourcemap: %p',
       async sourcemap => {
@@ -65,5 +83,30 @@ describe('index', () => {
         await expectFileHasBeenCompressed('test/__output/' + expectedFileName)
       },
     )
+  })
+
+  describe('minSize', () => {
+    // 4 characters, but 8 bytes in UTF-8
+    const emitAssetPlugin = {
+      name: 'emit-asset',
+      generateBundle(this: any) {
+        this.emitFile({
+          type: 'asset',
+          fileName: 'umlauts.json',
+          source: '"ää"',
+        })
+      },
+    }
+
+    it('compresses files whose byte size reaches minSize', async () => {
+      await sampleRollup({ minSize: 6 }, [emitAssetPlugin])
+      expect(fs.existsSync('test/__output/umlauts.json.gz')).toBe(true)
+    })
+
+    it('skips files whose byte size is below minSize', async () => {
+      await sampleRollup({ minSize: 9 }, [emitAssetPlugin])
+      expect(fs.existsSync('test/__output/umlauts.json')).toBe(true)
+      expect(fs.existsSync('test/__output/umlauts.json.gz')).toBe(false)
+    })
   })
 })

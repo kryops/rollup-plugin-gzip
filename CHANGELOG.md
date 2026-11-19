@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Fix options explicitly set to `undefined` overriding the default values
+- Fix `minSize` option comparing the string length instead of the size in bytes
+- Fix Rollup version check incorrectly reporting Rollup >= 10 as unsupported
+
 ## v4.2.3 (2026-11-15)
 
 - Fix duplicate `sourceMappingURL` comment when using `sourcemapBaseUrl` or `sourcemapFileNames` ([#26](https://github.com/kryops/rollup-plugin-gzip/issues/26))

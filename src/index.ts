@@ -115,6 +115,8 @@ function getOutputFileContent(
       // so check for any existing comment instead of an exact match.
       // rolldown-vite includes it, but without the trailing line break.
       if (!sourceMappingUrlRegExp.test(source)) {
+        // we ignore sourcemapFileNames here cause it was only added in Rollup versions that
+        // already include the comment themselves
         const url =
           outputOptions.sourcemap === 'inline'
             ? outputFile.map.toUrl()
@@ -143,7 +145,8 @@ function getOutputFileContent(
 async function performInitChecks(options: GzipPluginOptions) {
   try {
     const { VERSION } = await import('rollup')
-    if (VERSION < '2.0.0') {
+    const majorVersion = parseInt(VERSION.split('.')[0], 10)
+    if (majorVersion < 2) {
       console.error(
         '[rollup-plugin-gzip] This plugin supports rollup version >= 2.0.0!',
       )
@@ -179,6 +182,20 @@ async function performInitChecks(options: GzipPluginOptions) {
   }
 }
 
+/**
+ * Removes keys with `undefined` values, so they do not override the defaults
+ * when spread, e.g. `gzip({ fileName: isBrotli ? '.br' : undefined })`
+ */
+function withoutUndefinedValues<T extends object>(obj: T): Partial<T> {
+  const result: Partial<T> = {}
+  for (const key of Object.keys(obj) as Array<keyof T>) {
+    if (obj[key] !== undefined) {
+      result[key] = obj[key]
+    }
+  }
+  return result
+}
+
 function gzipPlugin(explicitOptions: GzipPluginOptions = {}): Plugin {
   performInitChecks(explicitOptions)
 
@@ -194,7 +211,7 @@ function gzipPlugin(explicitOptions: GzipPluginOptions = {}): Plugin {
     minSize: 0,
     verifyContent: false,
 
-    ...explicitOptions,
+    ...withoutUndefinedValues(explicitOptions),
   }
 
   const mapFileName: StringMappingOption = isFunction(options.fileName)
@@ -242,7 +259,11 @@ function gzipPlugin(explicitOptions: GzipPluginOptions = {}): Plugin {
         }
 
         // minSize option check
-        if (options.minSize && options.minSize > fileContent.length) {
+        // use the byte length, as string length counts UTF-16 code units
+        if (
+          options.minSize &&
+          options.minSize > Buffer.byteLength(fileContent)
+        ) {
           return Promise.resolve()
         }
 
